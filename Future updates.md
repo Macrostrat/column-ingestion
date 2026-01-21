@@ -42,3 +42,9 @@ The **`units` sheet** would then include the following fields to reference these
 
 This feature could also rely on a locally defined timescale and hierarchy of intervals.
 Since we have not defined a data model for this yet, these fields are not yet implemented.
+
+## A `strat_names` sheet
+
+It would be useful to have a separate sheet defining stratigraphic lexicon information
+that is referenced in the columns. The format for this will be defined as stratigraphic
+lexicon handing in **Macrostrat v2** is improved.

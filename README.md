@@ -1,13 +1,14 @@
-# Macrostrat column ingestion
-
-> [!caution]
-> This is a draft document describing ongoing work. The format and features described here
-> are subject to change.
+# Macrostrat column ingestion format
 
 These templates and format specification for stratigraphic column data allow users to
-format stratigraphic information for ingestion into Macrostrat. These ingestion templates
+prepare stratigraphic information for ingestion into Macrostrat using tabular data. These ingestion templates
 were created in 2025-2026 by Evgeny Mazco and Daven Quinn for use by the broader geology
 community.
+
+> [!caution]
+> This is a draft document describing ongoing work. The format described here
+> is subject to change as the specification is implemented.
+
 
 ## Overview
 
@@ -47,9 +48,13 @@ chronostratigraphic and lithostratigraphic columns.
   developed dataset including bed-scale lithostratigraphic data, facies information, and datasets beyond this specification linked
   into the column framework (samples, notes, carbon isotope measurements, and sequence-stratigraphic surfaces) (Daven Quinn, 2026).
 
-
-
 ## Ingestion approach
+
+The `units` sheet is the core of the ingestion format, carrying information about individual stratigraphic
+intervals and their positions within a column. However, the scale of units varies dramatically between scales
+of stratigraphic columns. These templates support a range of approaches to defining units, with shorthands that
+can speed data entry for common use cases.
+
 
 ### Chronostratigraphic columns
 
@@ -76,6 +81,8 @@ Most importantly, unit descriptions such as `lithology`, `environment`, and `fac
 units, allowing for more rapid data entry when many adjacent units share similar characteristics.
 
 ## Next steps
+
+This spec will be refined as it is used by the community. Potential improvements being evaluated are described in the [**Future updates**](./Future%20updates.md) document.
 
 This spec for ingestion is not currently supported by ingestion scripts, but this work is in progress as part of
 the **Macrostrat v2** effort. Ingestion scripts will target the following workflows:
