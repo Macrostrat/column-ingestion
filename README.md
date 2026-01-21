@@ -26,9 +26,9 @@ in order to accommodate different patterns in the typical dataset.
 
 Altogether, these formats provide a flexible way to describe stratigraphic columns and associated information.
 They are good target for data ingestion but may also serve as an easy-to-produce archival format as well (e.g., for
-paper supplementary materials.
+paper supplementary materials).
 
-They allow column targeting Macrostrat's data structures and visualization formats. For example:
+Columns ingested using these tools will be ready to be represented in Macrostrat's database and open-source visualization tools. For example:
 
 - [**Las Animas Arch** chronostratigraphic column](https://dev.macrostrat.org/columns/77)
 - [**ODP Site U1332, Hole C** lithostratigraphic column](https://dev.macrostrat.org/columns/5113#facet=fossil-taxa) showing integration with PBDB for fossil taxa.
