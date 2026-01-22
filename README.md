@@ -15,10 +15,10 @@ community.
 These column ingestion sheets can be used to describe chronostratigraphic charts (i.e., based on age),
 measured stratigraphy (height), or boreholes (depth), using the following sheets of tabular data.
 
-- The [`units` sheet](./Format%20documentation.md#units-sheet) is the core of the ingestion format,
+- The [`units` sheet](./Format%20documentation.md#the-units-sheet) is the core of the ingestion format,
   carrying information about individual stratigraphic units and their positions within a column (in age or depth/height space).
-- The [`columns` sheet](./Format%20documentation.md#columns-sheet) carries metadata about columns
-- The [`metadata` sheet](./Format%20documentation.md#metadata-sheet) carries information about the project, compiler, and import defaults
+- The [`columns` sheet](./Format%20documentation.md#the-columns-sheet) carries metadata about columns
+- The [`metadata` sheet](./Format%20documentation.md#the-metadata-sheet) carries information about the project, compiler, and import defaults
 - Other ancillary sheets (e.g., `facies`, `refs`) provide additional metadata that helps fill the data table
 - [*Column associated data sheets*](./Format%20documentation.md#column-associated-data-sheets)
   can be included to provide additional information about units, facies, or other aspects of the column.
