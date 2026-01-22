@@ -69,7 +69,7 @@ environmental information that describe the unit.
 
 Lithostratigraphic columns can be ingested into the same data structures as chronostratigraphic columns,
 but they typically are much more detailed (i.e., an individual unit may represent a single cm- to meter-scale
-bed, rather than a formation or member). Lithostratigraphic columns are required to have positions defined
+bed, rather than an entire Formation or Member). Lithostratigraphic columns are required to have positions defined
 in physical units (`t_pos` and `b_pos`); age data is optional and secondary.
 
 Lithostratigraphic columns are typically simpler than chronostratigraphic columns, without overlapping units
