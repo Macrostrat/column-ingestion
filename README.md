@@ -1,7 +1,7 @@
 # Macrostrat column ingestion format
 
-These templates and format specification for stratigraphic column data allow users to
-prepare stratigraphic information for ingestion into Macrostrat using tabular formats (e.g., Excel spreadsheets). These ingestion templates
+These templates and format specification for stratigraphic column data allow preparation of stratigraphic information
+for ingestion into Macrostrat using tabular formats (e.g., Excel spreadsheets). These ingestion templates
 were created in 2025-2026 by Evgeny Mazco and Daven Quinn for use by the broader geology
 community.
 
