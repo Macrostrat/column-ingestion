@@ -89,8 +89,7 @@ This spec will be refined as it is used by the community. Potential improvements
 This spec for ingestion is not currently supported by ingestion scripts, but this work is in progress as part of
 the **Macrostrat v2** effort. Ingestion scripts will target the following workflows:
 
-- Upload of columns to the Macrostrat website and database
-- Revision of existing columns in Macrostrat
+- Creation and revision of columns to the Macrostrat website and database (with appropriate permissions)
 - Offline validation and visualization
 - Creation of Geopackage-based relational datasets for offline use and editing (using a prototype
   `.mcol` Macrostrat column exchange format)
