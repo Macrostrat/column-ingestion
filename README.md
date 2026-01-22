@@ -1,7 +1,7 @@
 # Macrostrat column ingestion format
 
 These templates and format specification for stratigraphic column data allow users to
-prepare stratigraphic information for ingestion into Macrostrat using tabular data. These ingestion templates
+prepare stratigraphic information for ingestion into Macrostrat using tabular formats (e.g., Excel spreadsheets). These ingestion templates
 were created in 2025-2026 by Evgeny Mazco and Daven Quinn for use by the broader geology
 community.
 
@@ -12,9 +12,8 @@ community.
 
 ## Overview
 
-Ingestion of both chronostratigraphic and lithostratigraphic columns is supported using
-the same ingestion process and fields, but the formatting requirements differ slightly
-in order to accommodate different patterns in the typical dataset.
+These column ingestion sheets can be used to describe chronostratigraphic charts (i.e., based on age),
+measured stratigraphy (height), or boreholes (depth), using the following sheets of tabular data.
 
 - The [`units` sheet](./Format%20documentation.md#units-sheet) is the core of the ingestion format,
   carrying information about individual stratigraphic units and their positions within a column (in age or depth/height space).
@@ -55,6 +54,9 @@ intervals and their positions within a column. However, the scale of units varie
 of stratigraphic columns. These templates support a range of approaches to defining units, with shorthands that
 can speed data entry for common use cases.
 
+Ingestion of both chronostratigraphic and lithostratigraphic columns is supported using
+the same ingestion process and fields, but the formatting requirements differ slightly
+in order to accommodate different patterns that are present across scales and types of data.
 
 ### Chronostratigraphic columns
 
