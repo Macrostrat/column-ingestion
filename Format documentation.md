@@ -68,6 +68,21 @@ in either physical or dimensionless units (see [thickness fields](#thickness) fo
   the bounds of units above or below. In practice, this can allow a column to be defined with a single `position` column, if an unbounded unit is
   included at the top.
 
+#### Attribute filling
+
+In lithostratigraphic columns (`col_type: "section"`), units are commonly defined at small (meter- to sub-meter) scale, reflecting the
+scale of rock attributes captured during stratigraphic measurement or core logging. To speed the entry of these highly detailed columns,
+unit description columns (`lithology`, `environment`, `grainsize`, `strat_name`, etc.) are filled to subsequent units by default. This
+allows changing attributes within a wider grouping to be developed intuitively. For instance, a single `strat_name` setting at the base
+of a recognized unit can be applied to an entire set of stratigraphic measurement within that unit.
+
+- By default, attributes are filled in the sense of the numeric ordering of the positional axis of the column. That is, for height-based
+  sections (e.g., measured sections) attributes will be filled "up" to stratigraphically higher units, and for
+  depth-based columns (e.g., cores), attributes will be filled stratigraphically "down". This can be controlled by the `fill_values` attribute in
+  the **Column** or **Metadata** sheets.
+- Unit descriptors such as `unit_name` and `unit_description` are not filled. Filling is disabled by default for chronostratigraphic columns,
+  since the lack of an explicit ordering field for sheets based on relative ages could easily lead to data loss.
+
 ### Chronostratigraphic position
 
 For [**Chronostratigraphic Columns**](#chronostratigraphic-columns), this is the primary axis and values are required for each unit.
@@ -252,7 +267,8 @@ within the project.
 - `col_type` : Default column type (`section` or `column`); filled from project defaults if not given
 - `axis_type` : Default axis type; defaults to `age` for chronostratigraphic columns; filled from defaults if not given
 - `fill_values`: Default fill value. Whether to fill unit attribute values (strat_name, lithology, environment,
-  and related fields) from lower units. Boolean, defaults to `f` .
+  and related fields) from lower units. Boolean, defaults to `f`, or direction to fill stratigraphically - `up` (default for height-based sections)
+  or `down` (default for boreholes)
 
 ### Spatial and stratigraphic context
 
