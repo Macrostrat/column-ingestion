@@ -293,7 +293,7 @@ age/spatial information if they are not provided at the column level.
 
 ## The `refs` sheet
 
-The **References** sheet contains reference information for citations used in the project. Each row represents a single reference, which should
+The **References** sheet contains citation information for references used in the project. Each row represents a single reference, which should
 be linked to columns in the **Columns** sheet via the `ref_id` field (if references differ between columns).
 This sheet can also be provided as a BibTeX or BibJSON file alongside the spreadsheet.
 
