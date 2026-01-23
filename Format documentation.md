@@ -8,6 +8,9 @@ that follow a defined template. Details on the required sheets and fields are pr
 - See the [**Examples**](./Examples) folder for example datasets.
 - The [**Future updates**](./Future%20updates.md) documents collects features that may be included in future versions of this format.
 
+This format can help prepare columns for assimilation into Macrostrat and may be useful as a lightweight archival
+specification for column-based information (e.g., for paper supplements).
+
 ## Overview of sheets
 
 - [**Units**](#the-units-sheet): Core table defining stratigraphic units
@@ -22,9 +25,13 @@ Some data can be provided in alternate formats:
 
 - Column and project metadata can be provided as layers in an associated GIS file instead of in the `geom` and `rgeom` fields
 - References can be provided as a BibTeX or BibJSON file instead of a `refs` sheet
-- Column images are not required and can be provided as separate image files
+- Column images can be provided as separate image files, if included
 
-All tables can include `comments` and/or `notes` for additional notes or clarifications.
+General considerations:
+
+- All tables can include `comments` and/or `notes` for additional notes or clarifications.
+- Extra columns will be skipped, allowing non-conforming data to be carried alongside this spec
+- Extra sheets will also be ignored (although sheets following a certain format will be treated as [column-linked data](#column-linked-data-sheets))
 
 ## The `units` sheet
 
@@ -45,8 +52,9 @@ or measured height/depth ranges (for **Lithostratigraphic Columns**).
 ### Lithostratigraphic position
 
 Lithostratigraphic position can be expressed in terms of measured heights/depths. This is the primary
-height representation for [**Lithostratigraphic Columns**](#lithostratigraphic-columns); for chronostratigraphic
-columns, these fields are optional and can be used instead of [thickness fields](#thickness).
+height representation for [**Lithostratigraphic Columns**](#lithostratigraphic-columns), expressed in physical units.
+For chronostratigraphic columns, these fields are not required but can optionally be used to track ordinal position,
+in either physical or dimensionless units (see [thickness fields](#thickness) for entering approximate height for chronostratigraphic units).
 
 - `b_pos`: Measured position of the bottom boundary of the unit (synonyms: `position`, `pos`)
 - `t_pos`: Measured position of the top boundary of the unit
@@ -62,7 +70,7 @@ columns, these fields are optional and can be used instead of [thickness fields]
 
 ### Chronostratigraphic position
 
-For [**Chronostratigraphic Columns**](#chronostratigraphic-columns), this is the primary height representation.
+For [**Chronostratigraphic Columns**](#chronostratigraphic-columns), this is the primary axis and values are required for each unit.
 For [**Lithostratigraphic Columns**](#lithostratigraphic-columns), these fields are optional and can be used
 to provide age constraints on units, which will be interpolated during the age modeling process. If chronostratigraphic information is not provided within the **Units** sheet,
 it will be inferred from column or project-level defaults in the **Columns** or **Metadata** sheets.
@@ -74,6 +82,10 @@ it will be inferred from column or project-level defaults in the **Columns** or 
 
 Some additional approaches to chronostratigraphic compilation are described in the
 [Future updates](./Future%20updates.md#future-chronostratigraphic-fields) document.
+
+**Note:** In chronostratigraphic data entry, the spreadsheet cannot easily be sorted by age, presenting the possibility
+for data loss if the table is mistakenly reordered. If this is a concern, a `b_pos`, `t_pos`, or `position` column can be created
+to store the units' intended ordering within a column (even if physical heights or depths are not available).
 
 #### Constraints
 
@@ -161,7 +173,7 @@ The lithology fields collectively describe the type of rock present in a unit.
   between 0 and 1, a percentage, or a qualitative proportion (`major` or `minor`). Multiple facies are separated by semicolons `;` or commas `,`.
 - If no proportion is provided, all facies are assumed to be present in equal proportions.
 
-### Thickness (_optional_)
+### Thickness
 
 - `min_thickness`: Minimum thickness of the unit (in position units; e.g., meters)
 - `max_thickness`: Maximum thickness of the unit (in position units; e.g., meters)
