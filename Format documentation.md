@@ -48,7 +48,7 @@ Lithostratigraphic position can be expressed in terms of measured heights/depths
 height representation for [**Lithostratigraphic Columns**](#lithostratigraphic-columns); for chronostratigraphic
 columns, these fields are optional and can be used instead of [thickness fields](#thickness).
 
-- `b_pos`: Measured position of the bottom boundary of the unit
+- `b_pos`: Measured position of the bottom boundary of the unit (synonyms: `position`, `pos`)
 - `t_pos`: Measured position of the top boundary of the unit
 
 #### Constraints
@@ -56,7 +56,9 @@ columns, these fields are optional and can be used instead of [thickness fields]
 - In simple cases, one of `b_pos` or `t_pos` can often be inferred from adjacent units
 - All `b_pos` and `t_pos` pairs must have a consistent ordering (upwards or downwards, depending on whether the column is organized
   in terms of depth or height).
-- Units that are unbounded at the top or bottom of a column are dropped during ingestion.
+- Units that are unbounded at the top or bottom of a column are dropped during ingestion, but their `t_pos`,`b_pos` values are still used to infer
+  the bounds of units above or below. In practice, this can allow a column to be defined with a single `position` column, if an unbounded unit is
+  included at the top.
 
 ### Chronostratigraphic position
 
