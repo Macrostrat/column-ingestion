@@ -80,7 +80,7 @@ of a recognized unit can be applied to an entire set of stratigraphic measuremen
   sections (e.g., measured sections) attributes will be filled "up" to stratigraphically higher units, and for
   depth-based columns (e.g., cores), attributes will be filled stratigraphically "down". This can be controlled by the `fill_values` attribute in
   the **Column** or **Metadata** sheets.
-- Unit descriptors such as `unit_name` and `unit_description` are not filled. Filling is disabled by default for chronostratigraphic columns,
+- Descriptors that are referenced to an individual unit, such as `unit_name`, `unit_description`, and the experimental parameters `basal_surface` and `lateral relationship` are not filled. Filling is also disabled by default for chronostratigraphic columns,
   since the lack of an explicit ordering field for sheets based on relative ages could easily lead to data loss.
 
 ### Chronostratigraphic position
