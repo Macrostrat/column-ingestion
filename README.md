@@ -13,7 +13,7 @@ community.
 ## Overview
 
 These column ingestion sheets can be used to describe chronostratigraphic charts (i.e., based on age),
-measured stratigraphy (height), or boreholes (depth), using the following sheets of tabular data.
+measured sections (height), or boreholes (depth), using the following sheets of tabular data.
 
 - The [`units` sheet](./Format%20documentation.md#the-units-sheet) is the core of the ingestion format,
   carrying information about individual stratigraphic units and their positions within a column (in age or depth/height space).
@@ -32,6 +32,13 @@ Columns ingested using these tools will be ready to be represented in Macrostrat
 - [**Las Animas Arch** chronostratigraphic column](https://dev.macrostrat.org/columns/77)
 - [**ODP Site U1332, Hole C** lithostratigraphic column](https://dev.macrostrat.org/columns/5113#facet=fossil-taxa) showing integration with PBDB for fossil taxa.
 
+## Template files
+
+Excel templates for different types of column ingestion are provided in the [**Templates**](./Templates) folder.
+The templates are largely similar, with differences primarily in which fields are included in the `units` sheet.
+Some documentation is provided in the templates themselves, but this is subsidiary to the full format documentation
+provided below.
+
 ## [Format documentation](./Format%20documentation.md)
 
 ## Examples
@@ -42,38 +49,45 @@ chronostratigraphic and lithostratigraphic columns.
 - An excerpt of the [Eastern European Platform chronostratigraphic chart](./Examples/Eurasia-Eastern-European-Platform-Chronostratigraphic.xlsx)
   from the Russian Geologic Survey, showing capture of regional chronostratigraphic data (Evgeny Mazco, 2025).
 - A [generalized lithostratigraphic column](Zebra-River-Group-Generalized.xlsx) from southern Namibia,
-  showing a minimal lithostratigraphic dataset with a basic age model (Daven Quinn, 2026).
+  showing a minimal height-based column with a basic age model (Daven Quinn, 2026).
 - [Detailed measured sections for the Zebra River Group](./Examples/Zebra-River-Group-Detailed.xlsx), showing a fully
-  developed dataset including bed-scale lithostratigraphic data, facies information, and datasets beyond this specification linked
+  developed dataset including bed-scale measured section data, facies information, and datasets beyond this specification linked
   into the column framework (samples, notes, carbon isotope measurements, and sequence-stratigraphic surfaces) (Daven Quinn, 2026).
 
 ## Ingestion approach
 
-The `units` sheet is the core of the ingestion format, carrying information about individual stratigraphic
-intervals and their positions within a column. However, the scale of units varies dramatically between scales
-of stratigraphic columns. These templates support a range of approaches to defining units, with shorthands that
-can speed data entry for common use cases.
+The `units` sheet is the core of the ingestion format, carrying information
+about bodies of rock within a column and the stratigraphic names, lithology,
+and environmental information that describe them. However,
+the scale of units varies dramatically between scales of stratigraphic columns.
+These templates support a range of approaches to defining units, with
+shorthands that can speed data entry for common use cases.
 
-Ingestion of both chronostratigraphic and lithostratigraphic columns is supported using
-the same ingestion process and fields, but the formatting requirements differ slightly
-in order to accommodate different patterns that are present across scales and types of data.
+Ingestion of chronostratigraphic columns, measured sections, and borehole logs
+are supported using the same ingestion process and fields, but the formatting
+requirements differ slightly in order to accommodate different patterns that
+are present across scales and types of data.
 
 ### Chronostratigraphic columns
 
-For chronostratigraphic columns, the `units` sheet must include age data for each unit, in the form of relative
-positions within chronostratigraphic intervals (e.g., "Lower Silurian", "Upper Devonian"). _Absolute_ ages
-are not currently supported. These units are assigned information about the stratigraphic names, lithology, and
-environmental information that describe the unit.
+"Chronostratigraphic columns" (in Macrostrat, `col_type: "column"`) represent
+chronostratigraphic charts with no direct physical measurement of
+unit thicknesses or positions. Instead, units are defined by their age ranges.
+For chronostratigraphic columns, age information must be provided to define an
+age model, in the form of relative positions within chronostratigraphic
+intervals (e.g., "Lower Silurian", "Upper Devonian"). _Absolute_ ages are not
+currently supported.
 
-### Lithostratigraphic columns
+### Measured sections
 
-Lithostratigraphic columns can be ingested into the same data structures as chronostratigraphic columns,
-but they typically are much more detailed (i.e., an individual unit may represent a single cm- to meter-scale
-bed, rather than an entire Formation or Member). Lithostratigraphic columns are required to have positions defined
-in physical units (`t_pos` and `b_pos`); age data is optional and secondary.
-
-Lithostratigraphic columns are typically simpler than chronostratigraphic columns, without overlapping units
-or complex hierarchical structures. This allows several affordances for easier data entry:
+Measured sections or borehole logs, are defined in terms of physical positions
+(height or depth). These columns (`col_type: "section"`) are typically much
+more detailed than chronostratigraphic charts (i.e., an individual unit may
+represent a single cm- to meter-scale bed, rather than an entire Formation or
+Member). Measured sections are typically simpler than chronostratigraphic
+columns, without overlapping units or complex hierarchical structures.
+Efficient entry of these columns is supported by several affordances for rapid
+data entry, including:
 
 - A **Facies** table, which summarizes of environmental and lithologic information that can be applied across many units
 - Top and bottom positions are inferred, allowing only one of `t_pos` or `b_pos` to be specified if there are no gaps or overlaps within a section.
@@ -84,8 +98,7 @@ units, allowing for more rapid data entry when many adjacent units share similar
 
 ## Next steps
 
-This spec will be refined as it is used by the community. Potential improvements being evaluated are described in the [**Future updates**](./Future%20updates.md) document.
-
+This spec will be refined as it is used by the community. Potential improvements are described in the [**Future updates**](./Future%20updates.md) document.
 This spec for ingestion is not currently supported by ingestion scripts, but this work is in progress as part of
 the **Macrostrat v2** effort. Ingestion scripts will target the following workflows:
 
