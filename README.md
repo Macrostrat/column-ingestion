@@ -44,7 +44,7 @@ provided below.
 ## Examples
 
 Several example datasets are provided in the [**Examples**](./Examples) folder, including both
-chronostratigraphic and lithostratigraphic columns.
+chronostratigraphic columns and measured sections.
 
 - An excerpt of the [Eastern European Platform chronostratigraphic chart](./Examples/Eurasia-Eastern-European-Platform-Chronostratigraphic.xlsx)
   from the Russian Geologic Survey, showing capture of regional chronostratigraphic data (Evgeny Mazco, 2025).
