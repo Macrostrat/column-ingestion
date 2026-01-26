@@ -36,8 +36,8 @@ General considerations:
 ## The `units` sheet
 
 The core table for defining units within a column. Each row represents a
-rock unit, with its boundaries defined by age intervals and proportions (for **Chronostratigraphic Columns**)
-or measured height/depth ranges (for **Measured Sections**).
+rock unit, with its boundaries defined by age intervals and proportions (for **Composite columns**)
+or measured height/depth ranges (for **Measured sections**).
 
 ### Unique identifiers
 
@@ -61,20 +61,18 @@ the column.
 
 For **Measured sections** (`col_type: "section"`), these fields are expressed
 in terms of measured heights/depths in physical units (e.g., meters). For
-**Chronostratigraphic columns** (`col_type: "column"`), these fields are
-assumed to be a unitless ordination of surface positions (see [thickness
-fields](#thickness) for entering approximate physical height for units in
-chronostratigraphic columns).
+**Composite columns** (`col_type: "column"`), these fields should be a unitless ordination of surface positions (
+see [thickness fields](#thickness) for entering approximate physical height for units in
+Composite Columns).
 
 #### Constraints
 
-- In simple cases, one of `b_pos`/`position` or `t_pos` can often be inferred
-  from adjacent units. For instance, when units do not overlap or have gaps,
-  the `t_pos` of one unit is equal to the `b_pos` of the unit above it. As
-  such, only one field is required.
+- In simple cases (when units do not overlap), only one of `b_pos` or `t_pos` is required
+  to define a unit's position. If only one is provided, the other will be
+  inferred from adjacent units. `position` can be used in these cases as a synonym for `b_pos`.
 - All `b_pos`/`t_pos` pairs must have a consistent ordering (upwards or
   downwards, depending on whether the column is organized in terms of depth or
-  height). Chronostratigraphic columns can use either ordering, but it must be
+  height). Composite Columns can use either ordering, but it must be
   consistent within a column.
 - Units that are unbounded at the top or bottom of a section are dropped during
   ingestion, but their `t_pos`,`b_pos` values are still used to infer the
@@ -83,7 +81,7 @@ chronostratigraphic columns).
   the top.
 - Complex overlapping relationships can be described by units that share
   `b_pos`/`t_pos` values.
-- For chronostratigraphic columns, these fields are optional. If neither
+- For Composite Columns, these fields are optional but recommended. If neither
   `b_pos` nor `t_pos` is provided for a unit, positional ordering will be
   inferred from the order of rows in the sheet. This is not recommended, as it
   can easily lead to data loss if rows are reordered.
@@ -120,7 +118,7 @@ measurement within that unit.
 Chronostratigraphic position columns are used to tie a column's positional axis
 to geologic time. At least the top and bottom units of the column must be
 defined in chronostratigraphic terms in order for an age model to be applied
-This is essential for **Chronostratigraphic Columns** (since the primary axis
+This is essential for **Composite columns** (since the primary axis
 of the column is based on age) but optional for **Measured sections**.
 
 - `b_int` : Geologic interval at the bottom boundary of the unit. Name (e.g., "Devonian") or Macrostrat interval ID
@@ -135,9 +133,9 @@ Some additional approaches to chronostratigraphic compilation are described in t
 
 - Only one of `b_int`/`t_int` is required; if only one is provided, the unit will be assumed to lie
   within the specified interval, with `b_prop` and `t_prop` defining its relative position.
-- `b_prop` and `t_prop` must be between 0 and 1
-- `b_prop` must be less than `t_prop`
 - `b_int` must be older than `t_int` (if both provided)
+- `b_prop` and `t_prop` must be between 0 and 1
+- `b_prop` must be less than `t_prop` if provided
 
 - Values of these fields that do not match ordering provided by `b_pos`/`t_pos`
   will raise warnings during ingestion.
@@ -150,6 +148,8 @@ Some additional approaches to chronostratigraphic compilation are described in t
 
 - `unit_name`: Display name of the rock unit
 - `unit_description`: Original description of the stratigraphic unit from stratigraphic chart or supplemental materials, if provided
+
+These fields are generally important for Composite columns but optional for Measured sections.
 
 ### Stratigraphic names
 
@@ -198,10 +198,10 @@ The lithology fields collectively describe the type of rock present in a unit.
 
 #### Constraints and format
 
-- Lithologies should be formatted as `<attribute> <proportion>, <attribute> <lith> <proportion>; <attribute>, <attribute> <lith>`.
-- `<lith>` is a standard lithology term (e.g., sandstone, shale, limestone). Ideally it would be present in
+- The `lithology` and `minor_lith` fields should be formatted as `<attribute> <proportion>, <attribute> <lith> <proportion>; <attribute>, <attribute> <lith>`.
+- `<lith>` is a standard lithology term (e.g., sandstone, shale, limestone). Lithologies should be present in
   [Macrostrat's lithology lexicon](https://dev.macrostrat.org/lex/lithologies), but new terms can also be added.
-- `<attribute>` is an optional modifier (e.g., `fine-grained`, `arkosic`, `calcareous`). Ideally, it would be present
+- `<attribute>` is an optional modifier (e.g., `fine-grained`, `arkosic`, `calcareous`). Lithologies should be present
   in [Macrostrat's lithology attribute lexicon](https://dev.macrostrat.org/lex/lith-atts), but other terms can also be added,
   which will be skipped with a warning on ingestion.
 - `<proportion>` is an optional parenthetical containing a proportion of the lithology within the unit (or attribute within the lithology).
@@ -229,8 +229,8 @@ The lithology fields collectively describe the type of rock present in a unit.
 - `min_thickness`: Minimum thickness of the unit (in position units; e.g., meters)
 - `max_thickness`: Maximum thickness of the unit (in position units; e.g., meters)
 
-These fields are required for chronostratigraphic columns only. For
-[**Lithostratigraphic Columns**](#lithostratigraphic-columns), they will be
+These fields are required for **Composite columns** only. For
+[**Measured sections**](#lithostratigraphic-columns), they will be
 inferred from the `b_pos` and `t_pos` fields to match the measured physical height of the unit.
 
 ### Misc. unit descriptors (_optional, experimental_)
@@ -266,13 +266,13 @@ These will override project-level defaults where provided.
 See [Chronostratigrahic position](#chronostratigraphic-position) for more details.
 
 - `ref_ids`: References (keyed to refs table); comma- or semicolon-separated list
-- `axis_type` : Default axis type; defaults to `age` for chronostratigraphic columns; filled from defaults if not given
+- `axis_type` : Default axis type; defaults to `age` for Composite Columns; filled from defaults if not given
 - `col_type`: `section` or `column` (defaults to `column` for chronostratigraphy; `section` for lithostratigraphy)
 - `rgeom`: Reference geometry of the column, its "area of influence" (optional; falls back to `geom` if not provided)
 - `b_int`: Lowest interval considered during the drafting of the column (if applicable)
 - `t_int`: Highest interval considered during the drafting of the column (if applicable)
-- `b_prop`: Position within the lowest interval (Default: 0)
-- `t_prop`: Position within the highest interval (Default: 1)
+- `b_prop`: Position within the lowest interval (if known; fraction between 0 and 1)
+- `t_prop`: Position within the highest interval (if known; fraction between 0 and 1)
 
 ### Column geometry format
 
@@ -303,7 +303,7 @@ within the project.
 ### Column type defaults
 
 - `col_type` : Default column type (`section` or `column`); filled from project defaults if not given
-- `axis_type` : Default axis type; defaults to `age` for chronostratigraphic columns; filled from defaults if not given
+- `axis_type` : Default axis type; defaults to `age` for Composite Columns; filled from defaults if not given
 - `fill_values`: Default fill value. Whether to fill unit attribute values (strat_name, lithology, environment,
   and related fields) from lower units. Boolean, defaults to `f`, or direction to fill stratigraphically - `up` (default for height-based sections)
   or `down` (default for boreholes)
@@ -376,7 +376,7 @@ This is designed to allow the source material for column digitization to be carr
 Often, stratigraphic columns are packaged with attribute information that can be presented alongside the column, without
 being part of a core unit definition. Examples include **geochemical data, fossil occurrences, geochronologic data**, or
 notes and interpretations that are outside the scope of Macrostrat's core data models. This is most often the case
-for **Measured sections**, but it can also apply to **Chronostratigraphic columns**.
+for **Measured sections**, but it can also apply to **Composite Columns**.
 
 Ingested Excel templates can include any number of additional sheets beyond the core sheets defined above.
 

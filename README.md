@@ -29,13 +29,14 @@ paper supplementary materials).
 
 Columns ingested using these tools will be ready to be represented in Macrostrat's database and open-source visualization tools. For example:
 
-- [**Las Animas Arch** chronostratigraphic column](https://dev.macrostrat.org/columns/77)
-- [**ODP Site U1332, Hole C** lithostratigraphic column](https://dev.macrostrat.org/columns/5113#facet=fossil-taxa) showing integration with PBDB for fossil taxa.
+- [**Las Animas Arch** composite column](https://dev.macrostrat.org/columns/77)
+- [**ODP Site U1332, Hole C** borehole log](https://dev.macrostrat.org/columns/5113#facet=fossil-taxa) showing integration with PBDB for fossil taxa.
 
 ## Template files
 
-Excel templates for different types of column ingestion are provided in the [**Templates**](./Templates) folder.
-The templates are largely similar, with differences primarily in which fields are included in the `units` sheet.
+Several Excel templates are provided in the [**Templates**](./Templates) folder as starting points for column ingestion.
+All templates follow the same format, with differences primarily in which fields are available by
+default in the `units` sheet.
 Some documentation is provided in the templates themselves, but this is subsidiary to the full format documentation
 provided below.
 
@@ -68,9 +69,9 @@ are supported using the same ingestion process and fields, but the formatting
 requirements differ slightly in order to accommodate different patterns that
 are present across scales and types of data.
 
-### Chronostratigraphic columns
+### Composite columns
 
-"Chronostratigraphic columns" (in Macrostrat, `col_type: "column"`) represent
+**Composite columns** (in Macrostrat, `col_type: "column"`) represent
 chronostratigraphic charts with no direct physical measurement of
 unit thicknesses or positions. Instead, units are defined by their age ranges.
 For chronostratigraphic columns, age information must be provided to define an
@@ -80,7 +81,7 @@ currently supported.
 
 ### Measured sections
 
-Measured sections or borehole logs, are defined in terms of physical positions
+**Measured sections** are detailed stratigraphic or borehole logs defined in terms of physical positions
 (height or depth). These columns (`col_type: "section"`) are typically much
 more detailed than chronostratigraphic charts (i.e., an individual unit may
 represent a single cm- to meter-scale bed, rather than an entire Formation or
