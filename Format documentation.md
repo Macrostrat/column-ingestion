@@ -1,6 +1,6 @@
 # Macrostrat column ingestion format documentation
 
-Version `0.1.0` - January 21, 2026
+Version `0.1.1` - January 24, 2026
 
 Macrostrat stratigraphic columns can be ingested from tabular formats (such as Excel spreadsheets)
 that follow a defined template. Details on the required sheets and fields are provided below.
