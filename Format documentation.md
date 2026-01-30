@@ -256,6 +256,13 @@ imported, but it will be incomplete pending addition of metadata.
 - `col_group`: Group of the column (optional)
 - `date_collected`: Date or date range of collection (if applicable)
 - `geom`: Primary geometry of the column
+- `lng`,`lat`: Position of the column
+
+#### Constraints and format
+
+Either `geom` or a `lng`,`lat` pair are required. The `geom` field can be provided either as two comma-separated values (which
+will be interpreted as a point location) or a _Well-known text_ (e.g. [[1]](https://wktmap.com/)) geometry value, which can be
+a point, line, or polygon.
 
 ### Column metadata fields
 
@@ -274,11 +281,13 @@ See [Chronostratigrahic position](#chronostratigraphic-position) for more detail
 - `b_prop`: Position within the lowest interval (if known; fraction between 0 and 1)
 - `t_prop`: Position within the highest interval (if known; fraction between 0 and 1)
 
-### Column geometry format
+### Column location
 
-The separation of the `geom` and `rgeom` fields handle cases where a column is assigned an "area of influence" beyond its
-actual measured location. This is useful to denote that certain columns are representative of a study area. At least
-one of these fields must be provided. These fields can also be provided as layers (with `col_id` and/or `project_id`
+For most columns, `rgeom` will not be set. This field handles cases where a column is assigned an "area of influence" beyond its
+actual measured location. This is useful to denote that certain columns are representative of a study area. In most cases,
+Macrostrat will automatically infer this information. 
+
+Column location fields (both `geom` and `rgeom`) can also be provided as layers (with `col_id` and/or `project_id`
 fields to map  to specific columns) in an associated GIS file.
 
 ## The `metadata` sheet
