@@ -2,7 +2,7 @@
 
 These templates and format specification for stratigraphic column data allow preparation of stratigraphic information
 for ingestion into Macrostrat using tabular formats (e.g., Excel spreadsheets). These ingestion templates
-were created in 2025-2026 by Evgeny Mazco and Daven Quinn for use by the broader geology
+were created in 2025-2026 by Evgeny Mazko and Daven Quinn for use by the broader geology
 community.
 
 > [!caution]
@@ -34,7 +34,7 @@ Columns ingested using these tools will be ready to be represented in Macrostrat
 
 ## Template files
 
-Several Excel templates are provided in the [**Templates**](./Templates) folder as starting points for column ingestion.
+Several Excel templates are provided in the [**Excel Templates**](./Excel%20Templates) folder as starting points for column ingestion.
 All templates follow the same format, with differences primarily in which fields are available by
 default in the `units` sheet.
 Some documentation is provided in the templates themselves, but this is subsidiary to the full format documentation
@@ -48,7 +48,7 @@ Several example datasets are provided in the [**Examples**](./Examples) folder, 
 chronostratigraphic columns and measured sections.
 
 - An excerpt of the [Eastern European Platform chronostratigraphic chart](./Examples/Eurasia-Eastern-European-Platform-Chronostratigraphic.xlsx)
-  from the Russian Geologic Survey, showing capture of regional chronostratigraphic data (Evgeny Mazco, 2025).
+  from the Russian Geologic Survey, showing capture of regional chronostratigraphic data (Evgeny Mazko, 2025).
 - A [generalized lithostratigraphic column](Zebra-River-Group-Generalized.xlsx) from southern Namibia,
   showing a minimal height-based column with a basic age model (Daven Quinn, 2026).
 - [Detailed measured sections for the Zebra River Group](./Examples/Zebra-River-Group-Detailed.xlsx), showing a fully
