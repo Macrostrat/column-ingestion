@@ -56,8 +56,8 @@ The most important aspect of a stratigraphic column is the vertical position of
 each unit. Positional fields help define the unit's vertical position within
 the column.
 
-- `b_pos`: Position of the bottom boundary of the unit (synonyms: `position`, `pos`)
-- `t_pos`: Position of the top boundary of the unit
+- `b_pos`: Position of the bottom boundary of the unit relative to others in the column (synonyms: `position`, `pos`); in the case of axis-type==age this should be a sequence from oldest to youngest; in the of axis_type is height or depth this is the positional value. 
+- `t_pos`: Position of the top boundary of the unit; axis-type conditions above apply, but in reference to the top boundary of the unit.
 
 For **Measured sections** (`col_type: "section"`), these fields are expressed
 in terms of measured heights/depths in physical units (e.g., meters). For
