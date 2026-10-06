@@ -43,7 +43,7 @@ provided below.
 New to the format? Start with the [**quickstart guide**](./Column%20ingestion%20quickstart.md) and the
 [guided template](https://github.com/Macrostrat/column-ingestion/raw/main/Excel%20Templates/column-ingestion-template.xlsx). The template is built to be read alongside the guide: its
 tabs follow the guide's steps, headers are colour-coded by whether a field is required, and each data tab is paired
-with an example tab explaining every field.
+with an example tab explaining every field. Common questions are answered in the [**FAQ**](./Column%20ingestion%20FAQ.md).
 
 ### Editing the guided template
 
