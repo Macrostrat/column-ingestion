@@ -1,11 +1,13 @@
-# Macrostrat column ingestion format documentation
+# Macrostrat column ingestion format: full specification
 
 Version `0.1.1` - January 24, 2026
 
 Macrostrat stratigraphic columns can be ingested from tabular formats (such as Excel spreadsheets)
 that follow a defined template. Details on the required sheets and fields are provided below.
 
-- See the [**Examples**](./Examples) folder for example datasets.
+- New to the format? The [**quickstart guide**](./Column%20ingestion%20quickstart.md) covers the essentials for building
+  a column spreadsheet; this document describes every sheet, field, and option.
+- See the [**Examples**](https://github.com/Macrostrat/column-ingestion/tree/main/Examples) folder for example datasets.
 - The [**Future updates**](./Future%20updates.md) documents collects features that may be included in future versions of this format.
 
 This format can help prepare columns for assimilation into Macrostrat and may be useful as a lightweight archival
@@ -67,9 +69,10 @@ Composite Columns).
 
 #### Constraints
 
-- In simple cases (when units do not overlap), only one of `b_pos` or `t_pos` is required
-  to define a unit's position. If only one is provided, the other will be
-  inferred from adjacent units. `position` can be used in these cases as a synonym for `b_pos`.
+- Every unit needs a `b_pos` (`position` and `pos` are synonyms); rows without one are dropped.
+  `t_pos` is optional: a blank `t_pos` is taken from the `b_pos` of the next unit up. The topmost
+  unit therefore needs its own `t_pos`, or a final row above it that carries only a `b_pos` to mark
+  the top of the column (see below).
 - All `b_pos`/`t_pos` pairs must have a consistent ordering (upwards or
   downwards, depending on whether the column is organized in terms of depth or
   height). Composite Columns can use either ordering, but it must be
@@ -81,10 +84,8 @@ Composite Columns).
   the top.
 - Complex overlapping relationships can be described by units that share
   `b_pos`/`t_pos` values.
-- For Composite Columns, these fields are optional but recommended. If neither
-  `b_pos` nor `t_pos` is provided for a unit, positional ordering will be
-  inferred from the order of rows in the sheet. This is not recommended, as it
-  can easily lead to data loss if rows are reordered.
+- Composite Columns also need `b_pos`, as an ordinal sequence (e.g., `1`, `2`, `3`, … from oldest
+  to youngest). Row order in the sheet is not used, so rows can be sorted freely.
 
 #### Attribute filling
 
@@ -93,33 +94,41 @@ small (meter- to sub-meter) scale, reflecting the scale of rock attributes
 captured during field stratigraphic measurement or core logging. It can be
 tedious to enter repeated values for attributes that change infrequently.
 
-Unit description fields (`lithology`, `environment`, `grainsize`,
-`strat_name`, etc.) can be automatically filled to subsequent units based on
-the values of lower units. This allows gradually changing attributes within a wider grouping to be
-entered intuitively. For instance, a single `strat_name` setting at the base
+Unit description fields can be automatically filled into blank cells from
+the unit above. This allows gradually changing attributes within a wider grouping to be
+entered intuitively. For instance, a single `strat_name` setting at the top
 of a recognized unit can be applied to an entire set of stratigraphic
-measurement within that unit.
+measurement below it, down to the next unit where a new value is entered.
 
-- By default, attributes are filled according the numeric ordering of the
-  positional axis of the column. That is, for height-based axes (e.g.,
-  measured sections) attributes will be filled "up" to stratigraphically higher
-  units, and for depth axes (e.g., cores), attributes are filled
-  stratigraphically "down".
-- The direction of filling can be controlled by the `fill_values` attribute in the
-  **Column** or **Metadata** sheets.
-- Descriptors that are referenced to an individual unit (`unit_name`,
-  `unit_description`, `basal_surface`, `lateral relationship`) are not filled.
-  Filling is also disabled if [Positional columns](#column-position) are not defined,
-  as the lack of an explicit ordering field for sheets based on relative ages
-  can easily lead to data loss.
+- Filling is turned on with `fill_values: y` in the **Metadata** sheet; it is off by default.
+- Values are filled **down**: units are ordered by `b_pos`, highest first, and a blank
+  cell takes the value of the nearest unit above it that has one. For a height-based
+  measured section, enter a value at the **top** of the interval it applies to.
+- To stop a value from filling further down, enter `none` in a cell. That cell, and
+  the blank cells below it, are left empty.
+- Filled fields: `lithology`, `minor_lith`, `color`, `grainsize`, `strat_name`,
+  `unit_name`, and `facies`.
+- Not filled: `environment`, `unit_description`, `comments`, `basal_surface`,
+  `lateral_relationship`, and the chronostratigraphic fields (`b_int`, `t_int`,
+  `b_prop`, `t_prop`), which follow their own rules
+  (see [Chronostratigraphic position](#chronostratigraphic-position)).
 
 ### Chronostratigraphic position
 
 Chronostratigraphic position columns are used to tie a column's positional axis
-to geologic time. At least the top and bottom units of the column must be
-defined in chronostratigraphic terms in order for an age model to be applied
+to geologic time. Ages are entered only at **tie points**, and an age model fills in the rest.
 This is essential for **Composite columns** (since the primary axis
 of the column is based on age) but optional for **Measured sections**.
+
+- Each section needs **at least two tie points at different positions** for an age model to be built.
+  With fewer, the ingester skips the age model for that section (with a warning), and its units keep
+  only the ages written on them.
+- Between tie points, ages are interpolated linearly by position.
+- Beyond the highest or lowest tie point, ages are **not** extrapolated: a boundary outside the
+  tie points takes the age of the nearest one. Add a tie point near the top and base of a section
+  if their ages matter.
+- Boundaries you give are recorded with status `relative`; boundaries the model fills in are
+  recorded as `modeled`.
 
 - `b_int` : Geologic interval at the bottom boundary of the unit. Name (e.g., "Devonian") or Macrostrat interval ID
 - `t_int` : Geologic age at the top boundary of the unit. Name (e.g., "Devonian") or Macrostrat interval ID
@@ -131,18 +140,18 @@ Some additional approaches to chronostratigraphic compilation are described in t
 
 #### Constraints
 
-- Only one of `b_int`/`t_int` is required; if only one is provided, the unit will be assumed to lie
-  within the specified interval, with `b_prop` and `t_prop` defining its relative position.
+- A unit's base age is its `b_int` and `b_prop`. A blank `b_prop` is read as `0` (the oldest end of
+  the interval), so give an estimate rather than leaving it blank.
+- A blank `t_int` / `t_prop` is taken from the `b_int` / `b_prop` of the next unit up, so usually
+  only the topmost unit needs them. A `t_int` with a blank `t_prop` is read as `1` (the youngest end).
 - `b_int` must be older than `t_int` (if both provided)
 - `b_prop` and `t_prop` must be between 0 and 1
-- `b_prop` must be less than `t_prop` if provided
+- Correlated horizons in different columns should be given the same `b_int` and `b_prop`.
 
 - Values of these fields that do not match ordering provided by `b_pos`/`t_pos`
   will raise warnings during ingestion.
-- If chronostratigraphic information is not provided within the **Units**
-  sheet, it will be inferred from column or project-level defaults in the
-  **Columns** or **Metadata** sheets. This will yield highly generalized age
-  models and is not recommended.
+- Column- and project-level `b_int` / `t_int` fields (in the **Columns** and **Metadata** sheets)
+  are descriptive only: the ingester does not currently use them to build or fill an age model.
 
 ### Names and descriptions
 
@@ -248,8 +257,8 @@ are currently being evaluated for future use within Macrostrat.
 ## The `columns` sheet
 
 The **Columns** sheet contains metadata for each column in the project. Each row represents a single column, which should
-be linked to units in the **Units** sheet via the `col_id` field. If this sheet is not provided, a column can still be
-imported, but it will be incomplete pending addition of metadata.
+be linked to units in the **Units** sheet via the `col_id` field. This sheet is required: units are only ingested for
+columns listed here.
 
 - `col_id`: Unique identifier for a column (string or integer; required if multiple columns per spreadsheet)
 - `col_name`: Name for the column (required)
@@ -260,9 +269,13 @@ imported, but it will be incomplete pending addition of metadata.
 
 #### Constraints and format
 
-Either `geom` or a `lng`,`lat` pair are required. The `geom` field can be provided either as two comma-separated values (which
-will be interpreted as a point location) or a _Well-known text_ (e.g. [[1]](https://wktmap.com/)) geometry value, which can be
-a point, line, or polygon.
+Either a `lng`,`lat` pair or a `geom` is required.
+
+- `lng`,`lat`: decimal degrees (WGS84); longitudes west of Greenwich are negative. Use this for a point location.
+- `geom`: a _Well-known text_ (e.g. drawn with [wktmap.com](https://wktmap.com/)) `POLYGON` or `MULTIPOLYGON`, for a column that covers an
+  area. Points and lines are rejected here; give a point location as `lng`,`lat` instead.
+- If both are given, the polygon wins: the column's position is taken from inside the polygon, with a warning if the
+  `lng`,`lat` point falls outside it.
 
 ### Column metadata fields
 
@@ -281,6 +294,9 @@ See [Chronostratigrahic position](#chronostratigraphic-position) for more detail
 - `b_prop`: Position within the lowest interval (if known; fraction between 0 and 1)
 - `t_prop`: Position within the highest interval (if known; fraction between 0 and 1)
 
+The `b_int`, `t_int`, `b_prop` and `t_prop` fields here are descriptive only; the age model is built from the
+tie points in the **Units** sheet.
+
 ### Column location
 
 For most columns, `rgeom` will not be set. This field handles cases where a column is assigned an "area of influence" beyond its
@@ -297,11 +313,11 @@ dataset, including the name, organization, compilers, and default settings for c
 within the project.
 
 - __Unlike other sheets, this sheet is laid out as key-value pairs, with one field per row.__
-- If required metadata is not provided, the user will be prompted to provide it during ingestion.
+- If the project cannot be identified (no `project_name` or `project_id`), ingestion fails.
 
 ### Basic compilation information
 
-- `project_name` : Name of the project **(required)**
+- `project_name` : Name of the project **(required, unless `project_id` identifies an existing project)**
 - `organization` : Organization that originated the project
 - `url` : URL to a landing page for the project, if applicable
 - `project_id` : A unique identifier of the project (string or integer)
@@ -313,14 +329,14 @@ within the project.
 
 - `col_type` : Default column type (`section` or `column`); filled from project defaults if not given
 - `axis_type` : Default axis type; defaults to `age` for Composite Columns; filled from defaults if not given
-- `fill_values`: Default fill value. Whether to fill unit attribute values (strat_name, lithology, environment,
-  and related fields) from lower units. Boolean, defaults to `f`, or direction to fill stratigraphically - `up` (default for height-based sections)
-  or `down` (default for boreholes)
+- `fill_values`: Whether to fill blank unit attribute values (`strat_name`, `lithology`, and related fields) from the
+  unit above. `y`, `yes` or `true` turns filling on; anything else, or a missing row, leaves it off. Values always
+  fill **down** (see [Attribute filling](#attribute-filling)).
 
 ### Spatial and stratigraphic context
 
-Optional fields to provide context for the scope of the project. These will be used as defaults for
-age/spatial information if they are not provided at the column level.
+Optional fields to provide context for the scope of the project. They are descriptive only: the ingester
+does not currently use them as defaults for column ages or locations.
 
 - `b_int` : Lowest interval considered during the compilation effort (if applicable)
 - `t_int` : Highest interval considered during the compilation effort (if applicable)

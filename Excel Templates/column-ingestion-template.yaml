@@ -1,0 +1,459 @@
+# Macrostrat column ingestion template: human-readable source.
+#
+# This file defines every tab, header, colour, hover note, dropdown and example row in
+# `column-ingestion-template.xlsx`. Edit this file, then build and review a new copy:
+#
+#   make template   # writes column-ingestion-template-new.xlsx; the published file is untouched
+#   make promote    # when the new copy looks right, replace the published template with it
+#
+# Field properties:
+#   name     - header text, exactly as the ingester reads it (do not rename)
+#   kind     - header colour; one of the keys under `kinds`
+#   width    - column width (Excel character units; widths under 12 are widened to 12)
+#   meaning  - "What it is": shown in the hover note and on the example tab
+#   format   - what to type: shown in the hover note and on the example tab
+#   validation (optional) - an Excel dropdown or number check, applied to rows 2 onwards
+#   quickstart (optional) - false if the quickstart guide deliberately leaves this field out
+
+# The published template. New builds are written beside it with a `-new` suffix.
+output: column-ingestion-template.xlsx
+
+# The hand-written guide this template is read alongside. `make test` checks that every
+# field below is named in the guide's section for its tab, unless marked `quickstart: false`.
+quickstart: ../Column ingestion quickstart.md
+
+# Number of rows that dropdowns, number checks and highlights cover.
+max_rows: 2000
+
+# Header colours, in the order they appear in the START HERE legend.
+kinds:
+  required:
+    color: "F8B4A6"
+    label: Required
+    description: The upload fails without it.
+  recommended:
+    color: "FFE699"
+    label: Recommended
+    description: Fill in whenever you can.
+  either:
+    color: "F4B183"
+    label: "Required: one of"
+    description: Fill at least one field of the pair (strat_name / unit_name on the units tab).
+  tie_point:
+    color: "BDD7EE"
+    label: Age tie point
+    description: Fill in only where you know the age (at least 2 per column); ages in between are interpolated.
+  optional:
+    color: "E7E6E6"
+    label: Optional
+    description: ""
+
+# Text used on every "(example)" tab.
+example_tabs:
+  meaning_label: What it is
+  format_label: Format
+  row_label: Example
+  footer: This tab is a guide only and is ignored on upload. Type your own data on the tab without "(example)".
+
+start_here:
+  name: START HERE
+  tab_color: "404040"
+  title: Macrostrat column ingestion template
+  blocks:
+    - paragraph: Read alongside "Column ingestion quickstart.md". Fill the tabs left to right; the step numbers match the guide.
+    - paragraph: Each data tab is followed by an "(example)" tab showing what every field means, its format, and filled-in example rows. Type your own data on the plain tabs (refs, metadata, columns, units). The example tabs are ignored on upload.
+    - paragraph: Hover over any header cell (red triangle) for the same explanation. Do NOT rename tabs or headers, and do not add rows above the headers.
+    - heading: Header colours
+    - legend: [required, recommended, either, tie_point, optional]
+    - heading: Steps
+    - steps:
+        - [1, refs, "One row per source: ref_id, authors, title, year."]
+        - [2, metadata, "Project name plus a few settings (pre-filled; change if needed)."]
+        - [3, columns, "One row per column (an outcrop or core site): col_id + lat/lng."]
+        - [4, units, "One row per unit. A: heights (b_pos = bottom of the unit in metres above the column base; t_pos = top, on the topmost unit only). B: rock (lithology, plus strat_name and/or unit_name). C: ages at tie points (b_int + b_prop)."]
+        - [5, check, "Run the checklist below, then upload with \"dry run\" ticked first."]
+    - heading: Checklist
+    - checklist:
+        - Every col_id on units exists on columns (the dropdown enforces this).
+        - Every column has lat + lng (or a POLYGON in geom; a POINT is rejected).
+        - Every column has a top unit with t_pos and at least 2 age tie points (b_int + b_prop).
+        - Every unit has a strat_name or a unit_name (otherwise it is saved as "default").
+        - Every interval name is spelled as in Macrostrat (pick from the b_int dropdown).
+        - Every ref_id cited exists on refs, with authors, title and a year.
+        - Lithology is on every unit (the facies tab is NOT read by the ingester yet).
+        - If you worked from a figure, paste the image on a new tab and note how heights were measured.
+    - heading: Good to know
+    - paragraph: Units can be in any order; the ingester sorts them by b_pos. The top of each unit is taken from the base of the unit above.
+    - paragraph: A blank b_prop counts as 0 (the oldest end of the interval), so make an educated guess instead.
+    - paragraph: Correlated horizons in different columns get the same b_int and b_prop.
+    - paragraph: "Gaps or covered intervals: add them as a unit with no lithology and explain in comments."
+    - paragraph: Extra tabs (this one, the example tabs, facies and interval_names) are ignored on upload.
+
+sheets:
+  # ---------------------------------------------------------------- Step 1
+  - name: refs
+    tab_color: "C00000"
+    fields:
+      - name: ref_id
+        kind: required
+        width: 16
+        meaning: Your own short ID for this source. Columns cite it in ref_ids.
+        format: Text, unique, no spaces
+      - name: authors
+        kind: required
+        width: 34
+        meaning: All authors of the source.
+        format: Text
+      - name: title
+        kind: required
+        width: 44
+        meaning: Full title of the source.
+        format: Text
+      - name: date
+        kind: required
+        width: 8
+        meaning: Year the source was published.
+        format: Whole number (year)
+        validation: {type: whole, operator: greaterThan, value: 1600, prompt: "Year, e.g. 2011"}
+      - name: publication
+        kind: recommended
+        width: 32
+        meaning: Journal, volume and pages.
+        format: Text
+      - name: doi
+        kind: recommended
+        width: 18
+        meaning: DOI of the source.
+        format: Text, without https://doi.org/
+      - name: url
+        kind: optional
+        width: 30
+        meaning: Link to the source.
+        format: Web address
+      - name: comments
+        kind: optional
+        width: 30
+        meaning: Anything else about the source, e.g. which figure you used.
+        format: Text
+        quickstart: false
+    example:
+      tab_color: "F4B6B6"
+      rows:
+        - ref_id: Hogan_2011
+          authors: Eric G. Hogan, Christopher M. Fedo, and John D. Cooper
+          title: Reassessment of the Basal Sauk Supersequence Boundary across the Laurentian Craton-Margin Hinge Zone, Southeastern California
+          date: 2011
+          publication: The Journal of Geology, v. 119, no. 6, p. 661-685
+          doi: 10.1086/661990
+          url: https://doi.org/10.1086/661990
+          comments: Column data from Fig. 11a
+
+  # ---------------------------------------------------------------- Step 2
+  # Key/value layout: keys down column A, values in column B, no header row.
+  - name: metadata
+    layout: key_value
+    tab_color: "C00000"
+    rows:
+      - key: project_name
+        kind: required
+        meaning: Name of the project these columns belong to. Required unless project_id is given.
+        format: Text
+        example: Southern Marble Mountains - Wood Canyon Formation
+      - key: project_id
+        kind: optional
+        meaning: An existing Macrostrat project ID or short slug, if adding to one.
+        format: Whole number or short text
+        example: marble_mtns_wood_canyon
+      - key: compiler_name
+        quickstart: false
+        kind: recommended
+        meaning: Who built this spreadsheet.
+        format: Text
+        example: Jane Geologist
+      - key: compiler_orcid
+        quickstart: false
+        kind: optional
+        meaning: ORCID of the compiler.
+        format: 0000-0000-0000-0000
+        example: 0000-0002-1825-0097
+      - key: col_type
+        default: section
+        choices: [section, column]
+        kind: recommended
+        meaning: '"section" = a measured section at one place; "column" = a composite column.'
+        format: section or column
+        example: section
+      - key: axis_type
+        default: height
+        choices: [height, age]
+        kind: recommended
+        meaning: '"height" = unit positions are metres up from the base.'
+        format: height or age
+        example: height
+      - key: position_unit
+        default: meters
+        kind: optional
+        meaning: Unit used for b_pos and t_pos.
+        format: meters
+        example: meters
+      - key: fill_values
+        default: "n"
+        choices: ["y", "n"]
+        kind: required
+        meaning: '"y" = a blank lithology/strat_name/etc. cell copies the value from the unit above (type "none" to stop). Do not leave blank.'
+        format: y or n
+        example: "n"
+      - key: comments
+        kind: recommended
+        meaning: How heights were measured and any general assumptions.
+        format: Text
+        example: Heights digitized from Fig. 11a with WebPlotDigitizer.
+    example:
+      tab_color: "F4B6B6"
+      columns:
+        - [key, 18]
+        - [value (example), 45]
+        - [What it is, 60]
+        - [Format, 24]
+      footer: This tab is a guide only and is ignored on upload. On the real metadata tab the keys run down column A and your values go in column B, with no header row.
+
+  # ---------------------------------------------------------------- Step 3
+  - name: columns
+    tab_color: "ED7D31"
+    fields:
+      - name: col_id
+        kind: required
+        width: 10
+        meaning: Your own short ID for the column (one outcrop or core site). Units refer to it.
+        format: Text, unique, no spaces
+      - name: col_name
+        kind: recommended
+        width: 28
+        meaning: Readable name for the column.
+        format: Text
+      - name: col_group
+        kind: recommended
+        width: 24
+        meaning: Name shared by related columns, to group them.
+        format: Text
+      - name: lat
+        kind: required
+        width: 10
+        meaning: Latitude of the column. Required unless geom is filled.
+        format: Decimal degrees, -90 to 90
+        validation: {type: decimal, operator: between, value: -90, max: 90, prompt: "Latitude, -90 to 90"}
+      - name: lng
+        kind: required
+        width: 11
+        meaning: Longitude of the column. WEST IS NEGATIVE. Required unless geom is filled.
+        format: Decimal degrees, -180 to 180
+        validation: {type: decimal, operator: between, value: -180, max: 180, prompt: "Longitude, -180 to 180 (west is negative)"}
+      - name: geom
+        kind: optional
+        width: 28
+        meaning: Only if the column covers an area. A POINT here is rejected; use lat/lng.
+        format: POLYGON((lng lat, ...))
+      - name: ref_ids
+        kind: recommended
+        width: 16
+        meaning: Which source(s) on the refs tab this column comes from.
+        format: ref_id, comma-separated
+      - name: comments
+        kind: optional
+        width: 40
+        meaning: Where the location came from and how precise it is.
+        format: Text
+        quickstart: false
+    example:
+      tab_color: "F8CBAD"
+      rows:
+        - col_id: MM9
+          col_name: Southern Marble Mountains MM9
+          col_group: Southern Marble Mountains
+          lat: 34.4962
+          lng: -115.4859
+          ref_ids: Hogan_2011
+          comments: Located from Fig. 1 regional map, +/- 2-3 km.
+        - col_id: MM1
+          col_name: Southern Marble Mountains MM1
+          col_group: Southern Marble Mountains
+          lat: 34.4898
+          lng: -115.4782
+          ref_ids: Hogan_2011
+          comments: "~1 km SE of MM7-MM9 (Fig. 11c)."
+
+  # ---------------------------------------------------------------- Step 4
+  - name: units
+    tab_color: "2E75B6"
+    fields:
+      - name: col_id
+        kind: required
+        width: 9
+        meaning: Which column this unit belongs to.
+        format: A col_id from the columns tab
+        validation: {type: list, range: "columns!$A$2:$A$500", prompt: Pick a col_id from the columns tab}
+      - name: section_id
+        kind: optional
+        width: 10
+        meaning: Leave blank if the column is one continuous section. Use a new ID only where the age model breaks (e.g. a fault).
+        format: Text, or blank
+      - name: b_pos
+        kind: required
+        width: 10
+        meaning: HEIGHT OF THE BOTTOM of this unit, in metres measured up from the base of the column (base = 0). Every unit needs one.
+        format: Number (metres)
+        validation: {type: decimal, operator: greaterThan, value: -100000, prompt: "Bottom of the unit, metres above column base"}
+      - name: t_pos
+        kind: required
+        width: 10
+        meaning: HEIGHT OF THE TOP of this unit. Fill it ONLY on the topmost unit of each column; every other top is taken from the b_pos of the unit above.
+        format: Number (metres), top unit only
+        validation: {type: decimal, operator: greaterThan, value: -100000, prompt: Top of the unit - topmost unit only}
+      - name: lithology
+        kind: required
+        width: 30
+        meaning: "What the rock is: descriptive words, then the rock name."
+        format: Text; several lithologies separated by ;
+      - name: minor_lith
+        kind: optional
+        width: 20
+        meaning: Lesser lithologies within the unit.
+        format: Text, same format as lithology
+      - name: strat_name
+        kind: either
+        width: 24
+        meaning: "Formation or member name, as named in Macrostrat. Fill strat_name, unit_name, or both: each unit needs at least one. If unit_name is blank, this becomes the unit's name."
+        format: Text
+      - name: unit_name
+        kind: either
+        width: 14
+        meaning: 'A local name for the unit (e.g. "upper carbonate"). Fill unit_name, strat_name, or both: each unit needs at least one. If both are filled, this is the unit''s name.'
+        format: Text
+      - name: basal_surface
+        kind: optional
+        width: 14
+        meaning: Type of contact at the bottom of the unit.
+        format: Text, e.g. nonconformity, conformable
+      - name: b_int
+        kind: tie_point
+        width: 16
+        meaning: AGE AT THE BOTTOM of this unit, as a geologic time interval. Fill only at tie points (where you know the age); at least 2 per column. Ages in between are interpolated.
+        format: Macrostrat interval name (use the dropdown)
+        validation: {type: list, sheet: interval_names, strict: false, prompt: Pick a Macrostrat interval name}
+      - name: b_prop
+        kind: tie_point
+        width: 9
+        meaning: "WHERE IN THAT INTERVAL the bottom falls: 0 = start (oldest) of the interval, 0.5 = middle, 1 = end (youngest). A blank counts as 0, so give a best guess."
+        format: Number from 0 to 1
+        validation: {type: decimal, operator: between, value: 0, max: 1, prompt: "0 = oldest end, 1 = youngest end"}
+      - name: t_int
+        kind: tie_point
+        width: 13
+        meaning: "Age at the top. Usually blank: it is taken from the unit above. Fill only on the top unit if its age is known."
+        format: Interval name, or blank
+        validation: {type: list, sheet: interval_names, strict: false, prompt: Pick a Macrostrat interval name}
+      - name: t_prop
+        kind: tie_point
+        width: 8
+        meaning: Where in t_int the top falls (0-1). Usually blank.
+        format: Number 0-1, or blank
+        validation: {type: decimal, operator: between, value: 0, max: 1, prompt: "0-1"}
+      - name: age_model_notes
+        kind: recommended
+        width: 36
+        meaning: Why you chose each age tie point and proportion.
+        format: Text
+      - name: facies
+        kind: optional
+        width: 8
+        meaning: "Optional label linking to the facies tab. Not read on upload: still fill lithology."
+        format: Text, e.g. F1
+      - name: comments
+        kind: recommended
+        width: 40
+        meaning: Generalizations, gaps or covered intervals, anything a reader should know.
+        format: Text
+    # Turn both name cells red when a row has a col_id but neither name.
+    highlight_missing:
+      fields: [strat_name, unit_name]
+      when_filled: col_id
+      color: "FF7C80"
+    example:
+      tab_color: "BDD7EE"
+      rows: # column MM9, top to bottom
+        - col_id: MM9
+          b_pos: 6.16
+          t_pos: 7.54
+          lithology: cross-stratified sandstone
+          strat_name: Wood Canyon Formation
+          facies: F1
+          comments: Top of measured section, so t_pos is filled.
+        - col_id: MM9
+          b_pos: 5.31
+          lithology: pebble, cobble conglomerate
+          strat_name: Wood Canyon Formation
+          facies: F2
+          comments: Top comes from the unit above (6.16 m).
+        - col_id: MM9
+          b_pos: 4.93
+          lithology: cross-stratified sandstone
+          strat_name: Wood Canyon Formation
+          facies: F1
+        - col_id: MM9
+          b_pos: 4.77
+          lithology: pebble, cobble conglomerate
+          strat_name: Wood Canyon Formation
+          b_int: Terreneuvian
+          b_prop: 0.75
+          age_model_notes: "Placeholder age: base and datum tied within the Terreneuvian; proportions are best guesses."
+          facies: F2
+          comments: "Datum bed: age tie point, same b_int/b_prop in every column."
+        - col_id: MM9
+          b_pos: 0
+          lithology: cross-stratified sandstone
+          strat_name: Wood Canyon Formation
+          basal_surface: nonconformity
+          b_int: Terreneuvian
+          b_prop: 0.5
+          age_model_notes: "Placeholder age: base and datum tied within the Terreneuvian; proportions are best guesses."
+          facies: F1
+          comments: "Base of column (b_pos = 0): age tie point."
+
+  # ---------------------------------------------------------------- Optional
+  - name: facies
+    quickstart: false
+    tab_color: "A5A5A5"
+    fields:
+      - name: facies_id
+        kind: optional
+        width: 10
+        meaning: Optional label for your own bookkeeping.
+        format: Text, e.g. F1
+      - name: facies
+        kind: optional
+        width: 25
+        meaning: Facies name.
+        format: Text
+      - name: lithology
+        kind: optional
+        width: 36
+        meaning: Lithology string to copy into the units tab.
+        format: Text
+      - name: description
+        kind: optional
+        width: 45
+        meaning: Short description.
+        format: Text
+      - name: verbatim_description
+        kind: optional
+        width: 45
+        meaning: Description copied from the source.
+        format: Text
+
+  # Values for the b_int / t_int dropdowns: one Macrostrat interval name per line.
+  - name: interval_names
+    layout: list
+    tab_color: "A5A5A5"
+    header: interval_name
+    width: 35
+    values_file: interval-names.txt

@@ -1,2 +1,8 @@
 .idea
 \~$*.xls*
+__pycache__/
+*.egg-info/
+.venv/
+.pytest_cache/
+*-new.xlsx
+.DS_Store

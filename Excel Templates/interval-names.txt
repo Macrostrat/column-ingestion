@@ -1,0 +1,1715 @@
+Holocene
+Pleistocene
+Pliocene
+Miocene
+Oligocene
+Eocene
+Paleocene
+Late Cretaceous
+Early Cretaceous
+Late Jurassic
+Middle Jurassic
+Early Jurassic
+Late Triassic
+Middle Triassic
+Late Permian
+Guadalupian
+Early Permian
+Pennsylvanian
+Mississippian
+Late Devonian
+Middle Devonian
+Early Devonian
+Pridoli
+Ludlow
+Wenlock
+Llandovery
+Late Ordovician
+Middle Ordovician
+Early Ordovician
+Late Cambrian
+Middle Cambrian
+Early Cambrian
+Waucoban
+Albertan
+Namurian
+Early Triassic
+Lopingian
+Cisuralian
+Furongian
+Epoch 3
+Epoch 2
+Terreneuvian
+Neogene
+Paleogene
+Griesbachian
+Spathian
+Late Silurian
+Early Silurian
+Hudsonian
+Elsonian
+Cretaceous
+Tonian
+Cenozoic
+Mesozoic
+Paleozoic
+Neoproterozoic
+Mesoproterozoic
+Paleoproterozoic
+Neoarchean
+Mesoarchean
+Paleoarchean
+Eoarchean
+Proterozoic
+Archean
+Phanerozoic
+Precambrian
+NN21
+NN20
+NN19
+NN18
+NN17
+NN16
+NN15
+NN14
+NN13
+NN12
+NN11
+NN10
+NN9
+NN8
+NN7
+NN6
+NN5
+NN4
+Early Tertiary
+Middle Tertiary
+Late Tertiary
+Quaternary
+Tertiary
+Neoproterozoic-Cambrian
+Neoproterozoic-Paleozoic
+Proterozoic-Cambrian
+Proterozoic-Paleozoic
+CC4
+CC3
+CC2
+CC1
+NJ17
+NJ16
+NJ15
+NJ14
+NJ13
+NJ12
+NJ11
+NJ10
+NJ9
+NJ8
+NJ7
+NJ6
+NJ5
+NJ4
+NJ3
+NJ2
+NJ1
+Miaolingian
+Series 2
+Precambrian-Cambrian
+Precambrian-Paleozoic
+Precambrian-Phanerozoic
+Topazan
+Wyattia
+Fritzaspis
+Fallotaspis
+Nevadella
+Olenellus
+Eokochaspis nodosa
+Amecephalus arrojosensis
+Plagiura-Poliella
+Albertella
+Sweetognathus merrilli-Mesogondolella uralensis
+Sweetognathus binodosus
+Sweetognathus anceps-Mesogondolella bisselli
+Sweetognathus whitei
+Sweetognathus clarki
+Macl. maclearni
+Early Carboniferous
+Late Carboniferous
+Pennsylvanian-Permian
+Ordovician-Silurian
+Silurian-Devonian
+Devonian-Mississippian
+Triassic-Jurassic
+Jurassic-Cretaceous
+Cretaceous-Paleogene
+Cambrian-Ordovician
+Vendian
+Hadean
+Scaphites preventricosus
+Scaphites ventricosus
+Scaphites depressus
+Clioscaphites saxitonianus
+Clioscaphites vermiformis
+Clioscaphites choteauensis
+Desmoscaphites erdmanni
+Desmoscaphites bassleri
+Scaphites leei
+Scaphites hippocrepis
+Scaphites hippocrepis II
+Scaphites hippocrepis III
+Baculites sp. (smooth)
+Baculites obtusus
+Baculites maclearni
+Baculites asperiformis
+Neocomian
+Silesian
+Cincinnatian
+Ibexian
+M44
+M43
+M42
+M41
+C5An.1r
+pre-Noachian
+Noachian
+Hesperian
+Amazonian
+N. acostaensis/G. lenguaensis CRZ
+G. extremus PRZ - Atlantic
+G. tumida/G. nepenthes CRZ - Atlantic
+G. margaritae HOZ
+S. seminulina HOZ - Atlantic
+Cryptocarpium ornatum
+Calocyclas bandyca
+Cryptocarpium azyx
+Podocyrtis goetheana
+Podocyrtis chalara
+Podocyrtis mitra
+Podocyrtis ampla
+Thyrsocyrtis triacantha
+Dictyoprora mongolfieri
+Theocotyle cryptocephala
+Phormocyrtis striata striata
+Buryella clinata
+Bekoma bidartensis
+Bekoma campechensis
+Neodenticula seminae
+Proboscia curvirostris
+Actinocyclus oculatus
+Neodenticula koizumii
+Neodenticula koizumii - Neodenticula kamtschatica
+Neodenticula kamtschatica
+Thalassionema schraderi - Denticulopsis katayamae
+Denticulopsis dimorpha - Crucidenticula nicobarica
+Denticulopsis hyalina - Denticulopsis lauta
+Crucidenticula sawamurae - Thalassiosira fraga
+Thalassiosira praefraga
+Thalassiosira oestrupii
+N. kamtschatica - Nitz. rolandii
+Rouxia californica
+Thalassionema schraderi
+Denticulopsis katayamae
+Denticulopsis dimorpha
+Thalassiosira yabei
+Denticulopsis praedimorpha
+Crucidenticula nicobarica
+Denticulopsis simonsenii
+D. hyalina - D. praehyalina
+Rancholabrean
+Irvingtonian
+Piacenzian
+Zanclean
+Messinian
+Tortonian
+Serravallian
+Langhian
+Burdigalian
+Aquitanian
+Chattian
+Rupelian
+Whitneyan
+Orellan
+Priabonian
+Jacksonian
+Bartonian
+Lutetian
+Ypresian
+Wasatchian
+Clarkforkian
+Thanetian
+Danian
+Puercan
+Maastrichtian
+Campanian
+Santonian
+Coniacian
+Turonian
+Cenomanian
+Albian
+Aptian
+Barremian
+Hauterivian
+Valanginian
+Early Vendian
+Late Vendian
+Middle Carboniferous
+Biarmian
+Early Lopian
+Middle Lopian
+Late Lopian
+Early Karelian
+Late Karelian
+Early Riphean
+Middle Riphean
+Late Riphean
+Saamian
+Lopian
+Karelian
+Riphean
+Berriasian
+Tithonian
+Kimmeridgian
+Oxfordian
+Callovian
+Bathonian
+Bajocian
+Aalenian
+Toarcian
+Pliensbachian
+Sinemurian
+Hettangian
+Rhaetian
+Norian
+Carnian
+Ladinian
+Anisian
+Scythian
+Olenekian
+Induan
+Tatarian
+Ochoan
+Kazanian
+Kungurian
+Leonardian
+Artinskian
+Wolfcampian
+Sakmarian
+Asselian
+Gzhelian
+Virgilian
+Kasimovian
+Missourian
+Moscovian
+Desmoinesian
+Atokan
+Bashkirian
+Morrowan
+Serpukhovian
+Chesterian
+Visean
+Meramecian
+Osagean
+Tournaisian
+Kinderhookian
+Famennian
+Conewangan
+Cassadagan
+Senecan
+Frasnian
+Chemungian
+Fingerlakesian
+Givetian
+Cazenovian
+Tioughniogan
+Eifelian
+Southwoodian
+Emsian
+Helderbergian
+Sawkillian
+Deerparkian
+Siegenian
+Gedinnian
+Cayugan
+Lockportian
+Alexandrian
+Ashgill
+Richmondian
+Maysvillian
+Caradocian
+Edenian
+Shermanian
+Kirkfield
+Rocklandian
+Blackriverian
+Llandeilo
+Chazyan
+Whiterock
+Llanvirnian
+Arenigian
+Tremadocian
+Trempealeauan
+Franconian
+Dresbachian
+Smithian
+Dienerian
+Dzhulfian
+Gelasian
+Changhsingian
+Wuchiapingian
+Capitanian
+Wordian
+Roadian
+Pragian
+Lochkovian
+Ludfordian
+Gorstian
+Homerian
+Sheinwoodian
+Telychian
+Aeronian
+Rhuddanian
+Hirnantian
+Katian
+Sandbian
+Darriwilian
+Dapingian
+Floian
+Stage 10
+Jiangshanian
+Paibian
+Guzhangian
+Drumian
+Wuliuan
+Stage 4
+Stage 3
+Stage 2
+Fortunian
+Selandian
+Portlandian
+Calabrian
+Ionian
+Haweran
+Castlecliffian
+Nukumaruan
+Mangapanian
+Waipipian
+Opoitian
+Kapitean
+Tongaporutuan
+Waiauan
+Lillburnian
+Clifdenian
+Altonian
+Otaian
+Waitakian
+Duntroonian
+Whaingaroan
+Runangan
+Kaiatan
+Bortonian
+Porangan
+Heretaungan
+Mangaorapan
+Waipawan
+Teurian
+Haumurian
+Piripauan
+Teratan
+Mangaotanean
+Arowhanan
+Ngaterian
+Motuan
+Urutawan
+Korangan
+Richmondian-Hirnantian
+Rocklandian-Shermanian
+Edenian-Maysvillian
+Selandian-Thanetian
+Ufimian
+Stephanian
+Westphalian
+Torrejonian
+Tiffanian
+Bridgerian
+Uintan
+Duchesnean
+Chadronian
+Geringian
+Monroecreekian  
+Harrisonian
+Hemingfordian
+Barstovian
+Clarendonian
+Hemphillian
+Blancan
+Rocklandian-Kirkfield
+Early Paleocene
+Middle Paleocene
+Late Paleocene
+Early Eocene
+Middle Eocene
+Late Eocene
+Early Oligocene
+Late Oligocene
+Early Miocene
+Middle Miocene
+Late Miocene
+Early Pliocene
+Late Pliocene
+Early Pleistocene
+Late Pleistocene
+Middle Pleistocene
+Niagaran
+Wisconsinan
+Begadean
+Montezuman
+Dyeran
+Delamaran
+Marjuman
+Steptoean
+Sunwaptan
+Skullrockian
+Stairsian
+Arikareean
+Tulean
+Blackhillsian
+Mohawkian
+Gamachian
+Ulsterian
+Erian
+Chatauquan
+Ordian
+Templetonian
+Floran
+Undillan
+Boomerangian
+Mindyallan
+Idamean
+Iverian
+Payntonian
+Datsonian
+Warendan
+Lancefieldian
+Bendigonian
+Chewtonian
+Castlemainian
+Yapeenian
+Gisbornian
+Eastonian
+Bolindian
+Telfordian
+Mangapirian
+Barrettian
+Flettian
+Puruhauan
+Waiitian
+Makarewan
+Nelsonian
+Malakovian
+Etalian
+Kaihikuan
+Oretian
+Warepan
+Otapirian
+Aratauran
+Ururoan
+Temaikan
+Heterian
+Ohauan
+Puaroan
+Chautauquan
+Valmeyeran
+Meghalayan
+Northgrippian
+Greenlandian
+Otamitan
+Chibanian
+Nemakit-Daldynian
+Tommotian
+Atdabanian
+Botoman
+Toyonian
+Amgan
+Mayan
+Ayusokanian
+Sakian
+Aksaian
+Batyrbaian
+Khamamitian
+Bazovian
+Kirinian
+Chuguchanian
+Ovlachanian
+Khatynykhian
+Natalian
+Solonchanian
+Kyglitassian
+Khorokytian
+Keiloran
+Strunian
+Hastarian
+Ivorian
+Moliniacian
+Livian
+Warnantian
+Pendleian
+Arnsbergian
+Chokierian
+Kinderscoutian
+Marsdenian
+Yeadonian
+Langsettian
+Duckmantian
+Bolsovian
+Asturian
+Cantabrian
+Stephanian A
+Stephanian B
+Stephanian C
+Atunian
+Ziganian
+Gumerovian
+Malevkian
+Upinian
+Karakubian
+Cherepetian
+Kizelian
+Kosvian
+Radaevkian
+Bobrikian
+Tulian
+Aleksinian
+Mikhailovian
+Venevian
+Tarusian
+Steshevian
+Protvian
+Zapaltjubian
+Voznesenian
+Krasnopolyanian
+Severokeltmian
+Prikamian
+Cheremshanian
+Melekessian
+Vereian
+Kashirian
+Podolskian
+Myachkovian
+Krevyakinian
+Khamovnikian
+Dorogomilovian
+Rusavkinian
+Pavlovoposadian
+Noginskian
+Melekhovian
+Sjuranian
+Shikhanian
+Uskalykian
+Tastubian
+Sterlitamakian
+Burtsevian
+Irginian
+Sarginian
+Saraninian
+Flippovian
+Irenian
+Sokian
+Povolzhian
+Urzhumian
+Severodvinian
+Vyatkian
+Eopleistocene
+Neopleistocene
+Early Noachian
+Middle Noachian
+Late Noachian
+Early Hesperian
+Late Hesperian
+Early Amazonian
+Middle Amazonian
+Late Amazonian
+Jurassic
+Triassic
+Permian
+Carboniferous
+Devonian
+Silurian
+Ordovician
+Cambrian
+Hadrynian
+Aphebian
+Paleohelikian
+Neohelikian
+Kenoran
+Ediacaran
+Cryogenian
+Stenian
+Ectasian
+Calymmian
+Statherian
+Orosirian
+Rhyacian
+Siderian
+NN3
+NN2
+NN1
+NP25
+NP24
+NP23
+NP22
+NP21
+NP19-20
+NP18
+NP17
+NP16
+NP15
+NP14
+NP13
+NP12
+NP11
+NP10
+NP9
+NP8
+NP7
+NP6
+NP5
+NP4
+NP3
+NP2
+NP1
+CC26
+CC25
+CC24
+CC23
+CC22
+CC21
+CC20
+CC19
+CC18
+CC17
+CC16
+CC15
+CC14
+CC13
+CC12
+CC11
+CC10
+CC9
+CC8
+CC7
+CC6
+CC5
+Ptychagnostus praecurrens
+Ptychagnostus gibbus
+Bolaspidella
+Cedaria
+Crepicephalus
+Aphelaspis
+Dunderbergia
+Elvinia
+Taenicephalus
+Ellipsocephaloides-Idahoia
+Saukiella junia/Saukiella pyrene
+Saukiella serotina
+Eurekia apopsis
+Missisquoia
+Symphysurina brevispicata
+Symphysurina bulbosa
+Iapetognathus fluctivagus
+Cordylodus angulatus
+Rossodus manitouensis
+Macerodus dianae
+Acodus delatus/Oneotodus costatus
+Oepikodus communis
+Reutterodus andinus
+Microzarkodina flabellum/Tripodus laevus
+Histiodella altifrons
+Histiodella sinuosa
+Histiodella holodentata
+Phragmodus polonicus
+Cahabagnathus friendsvillensis
+Cahabagnathus sweeti
+Plectodina aculeata
+Erismodus quadridactylus
+Belodina compressa
+Phragmodus undatus
+Plectodina tenuis
+Belodina confluens
+Oulodus velicuspis
+Oulodus robustus
+Aphelognathus grandis
+Aphelognathus divergens
+Aphelognathus shatzeri
+Distomodus kentuckyensis
+Aspelunda expansa
+Pterospathodus tenuis
+Distomodus staurognathoides
+Pterospathodus eopennatus
+Pterospathodus amorphognathoides angulatus
+Pterospathodus amorphognathoides lennarti
+Pterospathodus amorphognathoides lithuanicus
+Pterospathodus amorphognathoides amorphognathoides
+Pterospathodus pennatus procerus
+Kockelella ranuliformis
+Ozarkodina sagitta rhenana
+Kockelella walliseri
+Kockelella ortus ortus
+Ozarkodina sagitta sagitta
+Ozarkodina bohemica longa
+Kockelella ortus obsidata
+Kockelella crassa
+Kockelella variabilis variabilis
+Ancoradella ploeckensis
+Polygnathoides siluricus
+Ozarkodina snajdri
+Ozarkodina crispa
+Ozarkodina eosteinhornensis
+Oulodus elegans detortus
+Caudicriodus hesperius
+Caudicriodus postwoschmidti
+Lanea omoalpha
+Lanea eleanorae
+Leanea transitans
+Ancryodelloides trigonicus
+Masaraella pandora morpho. Beta
+Pedavis gilberti
+Gondwania irregularis
+Gondwania kindlei
+Eocostapolygnathus pireneae
+Eocostapolygnathus kitabicus
+Eocostapolygnathus excavatus
+Eocostapolygnathus gronbergi
+Eocostapolygnathus nothoperbonus
+Polygnathus inversus
+Linguipolygnathus serotinus
+Polygnathus costatus patulus
+Polygnathus costatus partitus
+Polygnathus costatus costatus
+Tortodus knockelianus knockelianus
+Polygnathus ensensis
+Polygnathus hemiansatus
+Polygnathus varcus
+Schmidtognathus hermanni
+Klapperina disparilis
+Mesotaxis guanwushanensis
+Palmatolepis transitans
+Palmatolepis punctata
+Palmatolepis hassi
+Palmatolepis rhenana
+Palmatolepis linguiformis
+Palmatolepis triangularis
+Palmatolepis crepida
+Palmatolepis rhomboidea
+Palmatolepis marginifera
+Palmatolepis rugosa trachytera
+Palmatolepis perlobata postera
+Palmatolepis gracilis expansa
+Siphonodella praesulcata
+Siphonodella sulcata
+Siphonodella duplicata
+Siphonodella sandbergi-Siphonodella belkai
+Siphonodella quadruplicata-Patrognathus andersoni
+Gnathodus typicus-Siphonodella isosticha
+Dollimae bouckaerti
+Gnathodus semiglaber-Polygnathus communis
+Gnathodus pseudosemiglaber-Scallioganthus anchoralis
+Gnathodus texanus
+Gnathodus praebillineatus
+Gnathodus bilineatus
+Lochriea mononodosa
+Lochriea nodosa
+Lochriea ziegleri
+Lochriea cruciformis
+Gnathodus bollandensis
+Gnathodus postbilineatus
+Declinognathodus noduliferus
+Idiognathoides sinuatus
+Neognathodus askynensis
+Idiognathodus sinuosus
+Declinognathodus marginodosus
+Neognathodus atokaensis
+Declinognathodus donetzianus
+Neognathodus uralicus
+Streptognathodus dissectus
+Neoghanthodus medexultimus-Streptognathodus-concinnus
+Neoghanthodus round-Streptognathodus cancellosus
+Streptognathodus subexcelsus
+Idiognathodus sagittalis
+Streptognathodus cancellosus
+Idiognathodus toretzianus
+Streptognathodus firmus
+Streptognathodus simulator
+Streptognathodus vitali
+Streptognathodus virgilicus
+Streptognathodus simplex-Streptognathodus bellus
+Streptognathodus wabaunsensis
+Streptognathodus isolatus
+Streptognathodus sigmoidalis-Streptognathodus cristellaris
+Streptognathodus constrictus-Mesogondolella belladontae
+Streptognathodus fusus
+Streptognathodus postfusus
+Neostreptognathodus pequopensis
+Neostreptognathodus pnevi
+Neostreptognathodus prayi
+Sweetognathus guizhouensis
+Mesogondolella lamberti-Neostreptognathodus sulcoplicatus
+Jinogondolella nankingensis
+Jinogondolella aserrata
+Jinogondolella postserrata
+Jinogondolella shannoni
+Jinogondolella altudaensis
+Jinogondolella prexuanhanensis
+Jinogondolella granti
+Clarkina postitteri hongshuiensis
+Clarkina postitteri postitteri
+Clarkina dukouensis
+Clarkina asymmetrica
+Clarkina leveni
+Clarkina guangyuanensis
+Clarkina transcaucasica
+Clarkina orientalis
+Clarkina longicuspidata
+Clarkina wangi
+Clarkina subarinata
+Clarkina changxingensis
+Clarkina deflecta-Clarkina yini
+Clarkina zhejiangensis-Clarkina meishanensis
+Hindeodus parvus
+Isarcicella isarcica
+Neogondollela krystyni
+Sweetospathodus kummeli
+Neospathodus dieneri Morph 3
+Neospathodus waageni
+Borinella buurensis-Scythogondolella milleri
+Neospathodus pingdingshanensis
+Icriospathodus collinsoni
+Neospathodus triangularis
+Triassospathodus sosioensis
+Chiosella gondolelloides
+Chiosella timorensis
+Neogondolella? regalis
+Paragondolella excelsa
+Budurovignathus truempyi
+Budurovignathus hungaricus
+Paragondolella inclinata
+Metapolygnathus intermedius
+Metapolygnathus tadpole
+Metapolygnathus polygnathiformis
+Metapolygnathus carpathicus
+Metapolygnathus nodosus
+Metapolygnathus primitius
+Epigondolella quadrata
+Epigondolella triangularis
+Cypriodella multidentata
+Cypriodella spiculata
+Cypriodella postera
+Cypriodella serrulata
+Cypriodella bidentata
+Cypriodella mosheri
+Norigondolella sp.
+Misikella posternstenini
+Julian
+Tuvalian
+Lacian
+Alaunian
+Sevatian
+lower Otoceras boreale
+upper Otoceras boreale
+Ophiceras commune
+Proptychites rosenkrantzi strigatus
+Proptychites candidus
+Vavilovites sverdrupi
+Hedenstroemia hedenstroemi
+Euflemingites romunderi
+Anawasatchites tardus
+Bajarunia eumphala
+Olenikites pilaticus
+Siberlingites mulleri
+Lenotropites caurus
+Anagymnotoceras varium
+Eogymnotoceras deleeni
+Frechites chischa
+Eoprotrachyceras matutinum
+Tuchodiceras poseidon
+Meginoceras meginae
+Frankites sutherlandi
+Daxatina canadensis
+Tachyceras desatoyense
+Austrotrachyceras obesum
+Sirenites nanseni
+Tropites dilleri
+Tropites welleri
+Klamathites macrolobatus
+Stikinoceras kerri
+Malayites dawsoni
+Juvavites magnus
+Drepanites rutherfordi
+Mesohimavatites columbianus
+Gnomohalorites cordilleranus
+Chochloceras amoenum
+Choristoceras crickmayi
+Psiloceras planorbis
+Alsatites liasicus
+Schlotheimia angulata
+Arietites bucklandi
+Arnioceras semicostatum
+Caenisites turneri
+Asteroceras obtusum
+Oxynoticeras oxynotum
+Echinoceras raricostatum
+Uptonia jamesoni
+Tragophylloceras ibex
+Prodactylioceras davoei
+Amaltheus margaritatus
+Pleuroceras spinatum
+Dactylioceras tenuicostatum
+Harpoceras falciferum
+Hildoceras bifrons
+Haugia variabilis
+Grammoceras thouarsense
+Dumortieria levesquei
+Pleydellia aalensis
+Leioceras opalinum
+Ludwigia murchisonae
+Brasilia bradfordensis
+Graphoceras concavum
+Hyperlioceras discites
+Witchellia laeviuscula
+Stephanoceras humphriesianum
+Strenoceras niortense
+Garantiana garantiana
+Parkinsonia parkinsoni
+Zigzagiceras zigzag
+Procerites progracilis
+Tulites subcontractus
+Morrisiceras morrisi
+Procerites hodsoni
+Oxycerites orbis
+Clydoniceras discus
+Macrocephalites herveyi
+Prolanulites koenigi
+Sigloceras calloviense
+Kosmoceras jason
+Erymnoceras coronatum
+Peltoceras athleta
+Quenstedtoceras lamberti
+Quenstedtoceras mariae
+Cardioceras cordatum
+Perisphinctes plicatilis
+Perisphinctes pumilus
+Perisphinctes cautisnigrae
+Ringsteadia pseudocordata
+Pictonia baylei
+Rasenia cymodoce
+Aulacostephanus mutabilis
+Aulacostephanus eudoxus
+Aulacostephanus autissiodorensis
+Pectinatites elegans
+Pectinatites scitulus
+Pectinatites wheatleyensis
+Pectinatites hudlestoni
+Pavlovia pallasioides
+Pavlovia rotunda
+Virgatopavlovia fittoni
+Progalbanites albani
+Glaucolithites glaucolithus
+Galbanites okusensis
+Galbanites kerberus
+Titanites anguiformes
+Paracraspedites oppressus
+Subcraspedites primitivus
+Subcraspedites preplicomphalus
+Subcraspedites lamplughi
+Runctonia runctoni
+Hectoroceras kochi
+Surites icenii
+Surites stenomphalus
+Peregrinoceras albidum
+Paratollia/Platylenticeras
+Polyptychites
+Prodichotomites
+Dichotomites
+Stolcoceras tuberulatum
+Eleniceras paucinodum
+Endemoceras amblygonium
+Endemoceras noricum
+Endemoceras regale
+Speetoniceras inversum
+Milanowskia speetonensis
+Craspedodiscus gottschei
+Simbirskites marginatus
+Simbirskites variabilis
+Paracrioceras rarocinctum
+Haplocrioceras fissicostatum
+Paracrioceras elegans
+Paracrioceras denckmanni
+Ancyloceras inexum/S. pingue
+Simanocyloceras stolleyi
+Parancyloceras bidentatum/Parancyloceras scalare
+Deshayesites forbesi
+Deshayesites deshayesi
+Tropaeum bowerbanki
+Epicheloniceras martinoides
+Parahoplites nutfieldiensis
+Hypacanthoplites jacobi
+Leymeriella schrammeni
+Douvilleiceras mammillatum
+Hoplites dentatus
+Euhoplites loricatus
+Euhoplites lautus
+Diploceras cristatum
+Mortoniceras pricei
+Mortoniceras inflatum
+Mortoniceras fallax
+Mortoniceras rostratum
+Mortoniceras perinflatum
+Arrhaphoceras briacensis
+Mantelliceras mantelli
+Mantelliceras dixoni
+Neogastroplites haasi
+Neogastroplites cornutus
+Neogastroplites muelleri
+Neogastroplites americanus
+Neogastroplites maclearni
+Conlinoceras tarrantense - Conlinoceras gilberti
+Acanthoceras granerosense
+Acanthoceras muldoonense
+Acanthoceras bellense
+Acanthoceras amphibolum
+Pleisacanthoceras wyomingense
+Dunveganoceras pondi
+Dunveganoceras problematicum
+Dunveganoceras albertense
+Dunveganoceras conditum
+Sciponoceras gracile (Vasoceras diartianum)
+Sciponoceras gracile (Euomphaloceras septemseriatum)
+Burroceras clydense
+Neocardioceras juddii
+Nigericeras scotti
+Watinoceras devonense
+Pseudaspidoceras flexuosum
+Vascoceras birchbyi
+Mammites nodosoides
+Collingnoniceras woollgari
+Collingnoniceras praecox
+Prionocyclus hyatti
+Prionocyclus macombi
+Scaphites warreni
+Scaphites whitfieldi
+Scaphites nigricollensis
+Prionocyclus germari
+Scaphites mariasensis
+Baculites sp. (weak flank ribs)
+Baculites sp. (smooth II)
+Baculites perplexus
+Baculites gregoryensis
+Baculites reduncus
+Baculites scotti
+Didymoceras nebrascense
+Didymoceras stevensoni
+Exiteloceras jenneyi
+Didymoceras cheyennense
+Baculites compressus
+Baculites cuneatus
+Baculites reesidei
+Baculites jenseni
+Baculites eliasi
+Baculites baculus
+Baculites clinolobatus
+Hoploscaphites birkelundae
+Hoploscaphites nicolleti
+Jeletzkytes nebrascensis
+Late Pennsylvanian
+Middle Pennsylvanian
+Early Pennsylvanian
+Late Mississippian
+Middle Mississippian
+Early Mississippian
+Baculites grandis
+Early Paleozoic
+Late Paleozoic
+M40
+M39
+M38
+M37
+M36
+M35
+M34
+M33
+M32
+M31
+M30
+M29
+M28
+M27
+M26
+M25A
+M25
+M24B
+M24A
+M24
+M23
+M22A
+M22
+M21
+M20
+M19
+M18
+M17
+M16
+M15
+M14
+M13
+M12A
+M12
+M11A
+M11
+M10N
+M10
+M9
+M8
+M7
+M6
+M5
+M3
+M1
+M0
+C34
+C33
+C32
+C31
+C30
+C29
+C28
+C27
+C26
+C25
+C24
+C23
+C22
+C21
+C20
+C19
+C18
+C17
+C16
+C15
+C13
+C12
+C11
+C10
+C9
+C8
+C7A
+C7
+C6C
+C6B
+C6AA
+C6A
+C6
+C5E
+C5D
+C5C
+C5B
+C5AD
+C5AC
+C5AB
+C5AA
+C5A
+C5
+C4A
+C4
+C3B
+C3A
+C3
+C2A
+C2
+C1
+M44n.2n
+M44n.1r
+M44n.1n
+M43r
+M43n.3n
+M43n.2r
+M43n.2n
+M43.1r
+M43.1n
+M42r
+M42n.4n
+M42n.3r
+M42.3n
+M42.2r
+M42n.2n
+M42n.1r
+M42n.1n
+M41r
+M41n.3n
+M41n.2r
+M41n.2n
+M41n.1r
+M41n.1n
+M40r
+M40n.3n
+M40n.2r
+M40n.2n
+M40n.1r
+M40n.1n
+M39r
+M39n.6n
+M39n.5r
+M39n.5n
+M39n.4r
+M39n.4n
+M39n.3r
+M39n.3n
+M39n.2r
+M39n.2n
+M39n.1r
+M39n.1n
+M38r
+M38n.5n
+M28n.4r
+M38n.4n
+M38n.3r
+M38n.3n
+M38n.2r
+M38n.2n
+M38n.1r
+M38n.1n
+M37r
+M37n.2n
+M37n.1r
+M37n.1n
+M36r
+M36n.2n
+M36n.1r
+M36n.1n
+M35r
+M35n
+M34r
+M34n.2n
+M34n.1r
+M34n.1n
+M33r
+M33n.4n
+M33n.3r
+M33n.3n
+M33n.2r
+M33n.2n
+M33n.1r
+M33n.1n
+M32r
+M32n
+M31r
+M31n
+M30r
+M30n
+M29r
+M29n
+M28r
+M28n.4n
+M28n.3r
+M28n.3n
+M28n.2r
+M28n.2n
+M28n.1r
+M28n.1n
+M27r
+M27n
+M26r
+M26n.4n
+M26n.3r
+M26n.3n
+M26n.2r
+M26n.2n
+M26n.1r
+M26n.1n
+M25Ar
+M25An.3n
+M25An.2r
+M25An.2n
+M25An.1r
+M25An.1n
+M25r
+M25n
+M24Br
+M24Bn
+M24Ar
+M24An
+M24r.2r
+M24r.1n
+M24r.1r
+M24n
+M23r.2r
+M23r.1n
+M23r.1r
+M23n
+M22Ar
+M22An
+M22r
+M22n.3n
+M22n.2r
+M22n.2n
+M22n.1r
+M22n.1n
+M21r
+M21n
+M20r
+M20n.2n
+M20n.1r
+M20n.1n
+M19r
+M19n.2n
+M19n.1r
+M19n.1n
+M18r
+M18n
+M17r
+M17n
+M16r
+M16n
+M15r
+M15n
+M14r
+M14n
+M13r
+M13n
+M12Ar
+M12An
+M12r.2r
+M12r.1n
+M12r.1r
+M12n
+M11Ar
+M11An.2n
+M11An.1r
+M11An.1n
+M11r.2r
+M11r.1n
+M11r.1r
+M11n
+M10Nr
+M10Nn.3n
+M10Nn.2r
+M10Nn.2n
+M10Nn.1r
+M10r
+M10n
+M9r
+M9n
+M8r
+M8n
+M7r
+M7n
+M6r
+M6n
+M5r
+M5n
+M3r
+M3n
+M1r
+M1n
+M0r
+C34n
+C33r
+C33n
+C32r.2r
+C32r.1n
+C32r.1r
+C32n.2n
+C32n.1r
+C32n.1n
+C31r
+C31n
+C30r
+C30n
+C29r
+C29n
+C28r
+C28n
+C27r
+C27n
+C26r
+C26n
+C25r
+C25n
+C24r
+C24n.3n
+C24n.2r
+C24n.2n
+C24n.1r
+C24n1n
+C23r
+C23n.2n
+C23n.1r
+C23n.1n
+C22r
+C22n
+C21r
+C21n
+C20r
+C20n
+C19r
+C19n
+C18r
+C18n.2n
+C18n.1r
+C18n.1n
+C17r
+C17n.3n
+C17n.2r
+C17n.2n
+C17n.1r
+C17n.1n
+C16r
+C16n.2n
+C16n.1r
+C16n.1n
+C15r
+C15n
+C13r
+C13n
+C12r
+C12n
+C11r
+C11n.2n
+C11n.1r
+C11n.1n
+C10r
+C10n.2n
+C10n.1r
+C10n.1n
+C9r
+C9n
+C8r
+C8n.2n
+C8n.1r
+C8n.1n
+C7Ar
+C7An
+C7r
+C7n.2n
+C7n.1r
+C7n.1n
+C6Cr
+C6Cn.3n
+C6Cn.2r
+C6Cn.2n
+C6Cn.1r
+C6Cn.1n
+C6Br
+C6Bn.2n
+C6Bn.1r
+C6Bn.1n
+C6AAr.3r
+C6AAr.2n
+C6AAr.2r
+C6AAr.1n
+C6AAr.1r
+C6AAn
+C6Ar
+C6An.2n
+C6An.1r
+C6An.1n
+C6r
+C6n
+C5Er
+C5En
+C5Dr.2r
+C5Dr.1n
+C5Dr.1r
+C5Dn
+C5Cr
+C5Cn.3n
+C5Cn.2r
+C5Cn.2n
+C5Cn.1r
+C5Cn.1n
+C5Br
+C5Bn.2n
+C5Bn.1r
+C5Bn.1n
+C5ADr
+C5ADn
+C5ACr
+C5ACn
+C5ABr
+C5ABn
+C5AAr
+C5AAn
+C5Ar.3r
+C5Ar.2n
+C5Ar.2r
+C5Ar.1n
+C5Ar.1r
+C5An.2n
+C5An.1n
+C5r.3r
+C5r.2n
+C5r.2r
+C5r.1n
+C5r.1r
+C5n.2n
+C5n.1r
+C5n.1n
+C4Ar.3r
+C4Ar.2n
+C4Ar.2r
+C4Ar.1n
+C4Ar.1r
+C4An
+C4r.2r
+C4r.1n
+C4r.1r
+C4n.2n
+C4n.1r
+C4n.1n
+C3Br.3r
+C3Br.2n
+C3Br.2r
+C3Br.1n
+C3Br.1r
+C3Bn
+C3Ar
+C3An.2n
+C3An.1r
+C3An.1n
+Gilbert
+Thvera
+C3n.3r
+Sidufjall
+C3n.2r
+Nunivak
+C3n.1r
+Cochiti
+C2Ar
+C2An.3n
+Mammoth
+C2An.2n
+C2An.1r
+C2An.1n
+Matuyama
+C2r.1n
+C2r.1r
+Cobb Mountain
+C1r.2r
+Jaramillo
+Matuyama
+Brunhes
+G. cretacea PRZ
+P. eugubina TRZ
+E. edita PRZ
+P. uncinata LOZ
+M. angulata LOZ
+G. pseudomenardii TRZ
+M. velascoensis PRZ
+A. sibaiyaensis LOZ
+P. wilcoxensis/M. velascoensis CRZ
+M. marginodentata PRZ
+M. formosa LOZ
+M. aragonensis/M. subbotinae CRZ
+A. pentacamerata PRZ
+A. cuneicamerata LOZ
+G. nuttalli LOZ
+G. kugleri/M. aragonensis CRZ
+A. topilensis PRZ
+M. lehneri PRZ
+O. beckmanni TRZ
+M. crassatus HOZ
+G. semiinvoluta HOZ
+G. index HOZ
+H. alabamensis HOZ
+P. naguewichiensis HOZ
+T. ampliapertura HOZ
+D. sellii PRZ
+G. angulisuturalis/C.cubensis CRZ
+P. opima HOZ
+G. ciperoensis PRZ
+P. pseudokugleri LOZ
+P. kugleri TRZ
+G. binaiensis PRZ
+Globigerinatella sp./C. dissimilis CRZ
+G. bisphericus PRZ
+P. sicana LOZ
+O. suturalis LOZ
+F. peripheroacuta LOZ
+F. praefohsi LOZ
+F. fohsi TRZ
+G. praesiphonifera PRZ
+G. nepenthes/P. mayeri CRZ
+G. trilobus PRZ
+D. altispira HOZ - Atlantic
+G. miocenica HOZ - Atlantic
+G. fistulosus HOZ - Atlantic
+G. ruber PRZ
+Acarinina acarinata
+Acarinina mckannai
+G. truncatulinoides PRSZ
+G. tosaensis HOSZ
+G. plesiotumida/G. lenguaensis CRSZ
+N. acostaensis LOSZ
+F. robusta/F. fohsi CRSZ
+F. fohsi LOSZ
+P. glomerosa LOSZ
+P. sicana LOSZ
+F. birnageae LOSZ
+D. venezuelana PRSZ
+G. dehiscens/P. kugleri CRSZ
+P. kugleri LOSZ
+T. frontosa LOSZ
+Abathomphalus mayaroensis
+Racemiguembelina fruticosa - Contusotruncana contusa
+Gansserina gansseri
+Globotruncana aegyptiaca
+Globotruncanella havanensis
+Radotruncana calcarata
+Globotruncana ventricosa
+Globotruncanita elevata
+Dicarinella asymetrica
+Dicarinella concavata
+Marginotruncana sigali
+Helvetoglobotruncana helvetica
+Whiteinella archaeocretacea
+Rotalipora cushmani
+Rotalipora reicheli
+Rotalipora globotruncanoides
+Rotalipora appenninica
+Rotalipora ticinensis
+Biticinella breggiensis
+Ticinella primula
+Hedbergella planispira
+Ticinella bejaouaensis
+Hedbergella trocoidea
+Globigerinelloides algerianus
+Globigerinelloides ferreolensis
+Leupoldina cabri
+Globigerinelloides blowi
+Hedbergella similis - Hedbergella kuznetsovae
+Hedbergella sigali - "Hedbergella delrioensis"
+Hedbergella sigali - Hedbergella aptica
+Conoglobigerina gulekhensis
+Buccinosphaera invaginata
+Collosphaera tuberosa
+Stylatractus universus
+Amphirhopalum ypsilon
+Anthocyrtidium angulare
+Pterocanium prismetium
+Lychnodictyum audax
+Phormostichoartus doliolum
+Stichocorys peregrina
+Didymocyrtis penultima
+Didymocyrtis antepenultima
+Diartus petterssoni
+Dorcadospyris alata
+Calocycletta costata
+Stichocorys wolffi
+Stichocorys delmontensis
+Cyrtocapsella tetrapera
+Lychnocanoma elongata
+Dorcadospyris ateuchus
+Theocyrtis tuberosa
+Denticulopsis lauta
+Denticulopsis praelauta
+Crucidenticula kanayae
+Crucidenticula sawamurae
+Thalassiosira fraga
