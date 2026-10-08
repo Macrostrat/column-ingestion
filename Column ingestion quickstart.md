@@ -66,6 +66,8 @@ A unit is any chunk you can describe, from a single bed up to a whole formation.
 | `basal_surface` | e.g. `nonconformity`, `conformable`. |
 | `comments` | Generalizations you made, gaps, covered intervals. |
 
+> **Tip:** the ingester parses `lithology` / `minor_lith` text into Macrostrat lithologies, attributes and proportions. Paste your wording into the **[lithology matcher](https://dev.macrostrat.org/lex/lith-match)** to see exactly what it recognises — and which words it can't match — before you submit.
+
 **Step C: ages (surfaces)**
 
 You only fill these in at **tie points**. The ingester interpolates between them.
@@ -88,6 +90,7 @@ You only fill these in at **tie points**. The ingester interpolates between them
 - [ ] Every column has a topmost unit with `t_pos`, plus at least 2 age tie points.
 - [ ] Every unit has a `strat_name` or a `unit_name` (the template turns both cells red when neither is filled).
 - [ ] Every interval name is spelled as in Macrostrat.
+- [ ] Spot-check your `lithology` / `minor_lith` wording in the [lithology matcher](https://dev.macrostrat.org/lex/lith-match) — it shows the lithologies, attributes and proportions the ingester will read, and flags words it doesn't recognise.
 - [ ] Every `ref_id` cited exists on `refs`, with `authors`, `title` and a year.
 - [ ] If you worked from a figure, add a sheet with the original image and note how the heights were measured.
 - [ ] Upload with **dry run** checked first. It runs the full ingest and then undoes it, so it reports errors without saving anything.

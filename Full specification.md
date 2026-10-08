@@ -218,6 +218,11 @@ The lithology fields collectively describe the type of rock present in a unit.
   to be present in equal proportions.
 - The `minor_lith` field is a shorthand to set lithologies with a `(minor)` proportion by default.
 
+> **Preview how your text is parsed.** The [lithology matcher](https://dev.macrostrat.org/lex/lith-match)
+> runs the ingester's own lithology parser over any `lithology` / `minor_lith`
+> text and shows the lithologies, attributes and proportions it recognises — and
+> flags any words it can't match — so you can refine your wording before you submit.
+
 ### Environment
 
 - `environment`: Depositional environment interpretation; free text (e.g., "fluvial", "shallow marine") or [Macrostrat environment](https://dev.macrostrat.org/lex/environments)
