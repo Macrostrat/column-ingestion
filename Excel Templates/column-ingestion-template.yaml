@@ -70,23 +70,24 @@ start_here:
         - [1, refs, "One row per source: ref_id, authors, title, year."]
         - [2, metadata, "Project name plus a few settings (pre-filled; change if needed)."]
         - [3, columns, "One row per column (an outcrop or core site): col_id + lat/lng."]
-        - [4, units, "One row per unit. A: heights (b_pos = bottom of the unit in metres above the column base; t_pos = top, on the topmost unit only). B: rock (lithology, plus strat_name and/or unit_name). C: ages at tie points (b_int + b_prop)."]
+        - [4, units, "One row per unit. A: heights (b_pos = bottom of the unit in metres above the column base; t_pos = top, on the topmost unit or below a gap, or end with an empty closing row holding only b_pos). B: rock (lithology, plus strat_name and/or unit_name). C: ages at tie points (b_int + b_prop)."]
         - [5, check, "Run the checklist below, then upload with \"dry run\" ticked first."]
     - heading: Checklist
     - checklist:
         - Every col_id on units exists on columns (the dropdown enforces this).
         - Every column has lat + lng (or a POLYGON in geom; a POINT is rejected).
-        - Every column has a top unit with t_pos and at least 2 age tie points (b_int + b_prop).
+        - Every column has a top (t_pos on the top unit, or an empty closing row with only b_pos) and at least 2 age tie points (b_int + b_prop).
         - Every unit has a strat_name or a unit_name (otherwise it is saved as "default").
         - Every interval name is spelled as in Macrostrat (pick from the b_int dropdown).
         - Every ref_id cited exists on refs, with authors, title and a year.
         - Lithology is on every unit (the facies tab is NOT read by the ingester yet).
         - If you worked from a figure, paste the image on a new tab and note how heights were measured.
     - heading: Good to know
-    - paragraph: Units can be in any order; the ingester sorts them by b_pos. The top of each unit is taken from the base of the unit above.
+    - paragraph: Units can be in any order; the ingester sorts them by b_pos. The top of each unit is taken from the base of the unit above. The topmost unit's top is its own t_pos, or an empty closing row above it holding only col_id and b_pos.
     - paragraph: A blank b_prop counts as 0 (the oldest end of the interval), so make an educated guess instead.
     - paragraph: Correlated horizons in different columns get the same b_int and b_prop.
-    - paragraph: "Gaps or covered intervals: add them as a unit with no lithology and explain in comments."
+    - paragraph: "Covered intervals: add them as a unit with covered = y, and give your best inference of the lithology."
+    - paragraph: "Gaps (missing rock): give the unit below the gap its own t_pos, and explain in comments."
     - paragraph: Extra tabs (this one, the example tabs, facies and interval_names) are ignored on upload.
 
 sheets:
@@ -200,7 +201,7 @@ sheets:
         default: "n"
         choices: ["y", "n"]
         kind: required
-        meaning: '"y" = a blank lithology/strat_name/etc. cell copies the value from the unit above (type "none" to stop). Do not leave blank.'
+        meaning: '"y" = a blank lithology/strat_name/etc. cell copies the value from the unit below it, so enter a value at the base of the interval it applies to (type "none" to stop). Do not leave blank.'
         format: y or n
         example: "n"
       - key: comments
@@ -306,9 +307,9 @@ sheets:
       - name: t_pos
         kind: required
         width: 10
-        meaning: HEIGHT OF THE TOP of this unit. Fill it ONLY on the topmost unit of each column; every other top is taken from the b_pos of the unit above.
-        format: Number (metres), top unit only
-        validation: {type: decimal, operator: greaterThan, value: -100000, prompt: Top of the unit - topmost unit only}
+        meaning: HEIGHT OF THE TOP of this unit. Fill it ONLY on the topmost unit of each column, or on a unit below a gap; every other top is taken from the b_pos of the unit above. Or leave it blank and add an empty closing row above the top unit, with only col_id and b_pos.
+        format: Number (metres), top unit or below a gap
+        validation: {type: decimal, operator: greaterThan, value: -100000, prompt: Top of the unit - topmost unit or below a gap}
       - name: lithology
         kind: required
         width: 30
@@ -319,6 +320,11 @@ sheets:
         width: 20
         meaning: Lesser lithologies within the unit.
         format: Text, same format as lithology
+      - name: covered
+        kind: optional
+        width: 9
+        meaning: '"y" if the unit is covered: present but not exposed. Its lithology is then your best inference (e.g. shale for a recessive interval).'
+        format: y, or blank
       - name: strat_name
         kind: either
         width: 24
@@ -349,7 +355,7 @@ sheets:
       - name: t_int
         kind: tie_point
         width: 13
-        meaning: "Age at the top. Usually blank: it is taken from the unit above. Fill only on the top unit if its age is known."
+        meaning: "Age at the top. Usually blank: it is taken from the unit above. Fill only on the top unit if its age is known, or give the empty closing row a b_int instead."
         format: Interval name, or blank
         validation: {type: list, sheet: interval_names, strict: false, prompt: Pick a Macrostrat interval name}
       - name: t_prop
@@ -371,7 +377,7 @@ sheets:
       - name: comments
         kind: recommended
         width: 40
-        meaning: Generalizations, gaps or covered intervals, anything a reader should know.
+        meaning: Generalizations, gaps, anything a reader should know.
         format: Text
     # Turn both name cells red when a row has a col_id but neither name.
     highlight_missing:

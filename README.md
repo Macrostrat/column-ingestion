@@ -138,12 +138,12 @@ Efficient entry of these columns is supported by several affordances for rapid
 data entry, including:
 
 - A **Facies** table, which summarizes of environmental and lithologic information that can be applied across many units
-- Top positions are inferred from the unit above, so each unit needs only a `b_pos` (plus a `t_pos` on the topmost unit) if there are no gaps or overlaps within a section.
+- Top positions are inferred from the unit above, so each unit needs only a `b_pos` (plus a `t_pos` on the topmost unit, or an empty closing row above it) if there are no gaps or overlaps within a section.
 - Shorthand fields relating to typical lithostratigraphic measurement practices, such as `grainsize` and `covered`.
 
-Most importantly, unit descriptions such as `lithology`, `strat_name`, and `facies` can "fill down" into blank
-cells below them (with `fill_values: y` in the **Metadata** sheet), allowing for more rapid data entry when many
-adjacent units share similar characteristics. See [Attribute filling](./Full%20specification.md#attribute-filling).
+Most importantly, unit descriptions such as `lithology`, `strat_name`, and `facies` can "fill up" into blank
+cells above them (with `fill_values: y` in the **Metadata** sheet; downward, for cores logged by depth), allowing
+for more rapid data entry when many adjacent units share similar characteristics. See [Attribute filling](./Full%20specification.md#attribute-filling).
 
 ## Next steps
 

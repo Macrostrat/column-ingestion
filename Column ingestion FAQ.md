@@ -41,8 +41,10 @@ with the `col_id` of the column it belongs to.
 > [!question] Do I need to enter both `b_pos` and `t_pos` for every unit?
 
 No. Every unit needs a `b_pos`, the height of its base. Only the topmost unit of each
-column needs a `t_pos`; every other unit's top is taken from the base of the unit
-above it. Row order doesn't matter, because units are sorted by height.
+column, and any unit below a gap, needs a `t_pos`; every other unit's top is taken from
+the base of the unit above it. Instead of a `t_pos` on the topmost unit, you can end the
+column with an empty closing row: a row with only `col_id` and a `b_pos` giving the height
+of the top of the column. It is not a unit, but a `b_int` and `b_prop` on it date the top. Row order doesn't matter, because units are sorted by height.
 
 > [!question] How small or large should a unit be?
 
@@ -52,8 +54,11 @@ simpler option and note any generalizations in `comments`.
 
 > [!question] How do I record a gap or a covered interval?
 
-Add it as its own unit with no lithology, and say what it is in `comments`. A gap in
-the rock does not need a new `section_id` unless the age model changes across it.
+A covered interval (rock that is there but not exposed) is a unit like any other: set
+`covered` to `y`, and give your best inference of its lithology, such as `shale` for a
+recessive interval. A gap (missing rock) is not a unit: give the unit below it its own
+`t_pos`, so its top does not meet the base of the unit above, and say what it is in
+`comments`. A gap does not need a new `section_id` unless the age model changes across it.
 
 > [!question] Why are my units saved with the name "default"?
 
@@ -80,9 +85,10 @@ cells.
 > [!question] Do I have to repeat the same value down a long column?
 
 No. Set `fill_values` to `y` on the `metadata` sheet and blank cells take the value of
-the nearest unit **above** them (lithology, `strat_name`, `unit_name`, facies and a
-few others). Enter a value at the top of the interval it applies to, and type `none`
-in a cell to stop it filling further down.
+the nearest unit **below** them (lithology, `strat_name`, `unit_name`, environment,
+facies and a few others). Enter a value at the base of the interval it applies to, and
+type `none` in a cell to stop it filling further up. In a core logged by depth, values
+fill downward instead, from the top of each interval.
 
 ## Ages
 

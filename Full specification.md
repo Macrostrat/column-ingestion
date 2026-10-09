@@ -1,6 +1,6 @@
 # Macrostrat column ingestion format: full specification
 
-Version `0.1.1` - January 24, 2026
+Version `0.2.0` - October 9, 2026
 
 Macrostrat stratigraphic columns can be ingested from tabular formats (such as Excel spreadsheets)
 that follow a defined template. Details on the required sheets and fields are provided below.
@@ -38,8 +38,8 @@ General considerations:
 ## The `units` sheet
 
 The core table for defining units within a column. Each row represents a
-rock unit, with its boundaries defined by age intervals and proportions (for **Composite columns**)
-or measured height/depth ranges (for **Measured sections**).
+rock unit, placed by the surface it begins at (see [Column position](#column-position)),
+with ages tied to its surfaces (see [Chronostratigraphic position](#chronostratigraphic-position)).
 
 ### Unique identifiers
 
@@ -55,63 +55,142 @@ or measured height/depth ranges (for **Measured sections**).
 ### Column position
 
 The most important aspect of a stratigraphic column is the vertical position of
-each unit. Positional fields help define the unit's vertical position within
-the column.
+each unit. A column is a stack of **surfaces** (contacts) with **units** of rock between
+them, laid out along the column's **axis** (`axis_type`, set in the
+[**Columns**](#column-metadata-fields) or [**Metadata**](#column-type-defaults) sheet):
 
-- `b_pos`: Position of the bottom boundary of the unit relative to others in the column (synonyms: `position`, `pos`); in the case of axis-type==age this should be a sequence from oldest to youngest; in the of axis_type is height or depth this is the positional value. 
-- `t_pos`: Position of the top boundary of the unit; axis-type conditions above apply, but in reference to the top boundary of the unit.
+- `height`: measured position, increasing upward (e.g., meters above the base of a section).
+  The default for **Measured sections** (`col_type: "section"`).
+- `depth`: measured position, increasing downward (e.g., meters below the top of a core).
+- `age`: an ordination of stratigraphic surfaces, numbered forward in time from oldest to youngest
+  (see [Age axes](#age-axes)). The default for **Composite columns** (`col_type: "column"`).
 
-For **Measured sections** (`col_type: "section"`), these fields are expressed
-in terms of measured heights/depths in physical units (e.g., meters). For
-**Composite columns** (`col_type: "column"`), these fields should be a unitless ordination of surface positions (
-see [thickness fields](#thickness) for entering approximate physical height for units in
-Composite Columns).
+#### How positions work
+
+Each row records one surface and the unit that follows it along the axis. Walking up a
+measured section, that surface is the unit's base; logging down a core, it is the unit's
+top. Most columns need only **one position per row**, and each unit runs
+from its own position to the next row's.
+
+The last unit has no next row, so the sheet ends with a **closing row that holds only a
+position**: the top of the section, or the base of the core. It is not a unit; it marks
+the surface where the column ends.
+
+A measured section (`axis_type: height`):
+
+| `position` | `lithology`    | `strat_name`          |
+|-----------:|----------------|-----------------------|
+| 9.7        |                |                       |
+| 8.3        | sandstone      |                       |
+| 6.9        | conglomerate   |                       |
+| 0          | sandstone      | Wood Canyon Formation |
+
+This is three units: sandstone from 0 to 6.9 m, conglomerate from 6.9 to 8.3 m and
+sandstone from 8.3 to 9.7 m, with the empty row at 9.7 m closing the section. With
+`fill_values: y`, `strat_name` carries up from the base to all three.
+
+Both examples put the top of the column at the top of the sheet, as a column is drawn.
+The ingester sorts rows by position, so any order works.
+
+In a core with `axis_type: depth`, positions read downward:
+
+| `position` | `lithology` |
+|-----------:|-------------|
+| 0          | ooze        |
+| 3.2        | chalk       |
+| 7.5        |             |
+
+This is ooze from 0 to 3.2 m and chalk from 3.2 to 7.5 m, with the row at 7.5 m marking
+the base of the core.
+
+The rest of the format builds on this model:
+
+- **Gaps and overlaps** break the stack, so the units on either side give explicit
+  `b_pos` / `t_pos` (see [Constraints](#constraints)).
+- **Age axes** number surfaces instead of measuring them. The next surface is simply the
+  next number, so no closing row is needed (see [Age axes](#age-axes)).
+- **Ages** belong to surfaces too: `b_int` / `t_int` constrain the surfaces a unit begins
+  and ends at, and the age model fills in the rest
+  (see [Chronostratigraphic position](#chronostratigraphic-position)).
+- **Filling** runs in the same direction: a value carries from a row to the rows after it
+  along the axis (see [Attribute filling](#attribute-filling)).
+
+#### Positional fields
+
+- `position`: Position of the row's surface, where the unit begins along the axis (synonyms: `pos`,
+  `height`, `depth`). It is the base of the unit on a height or age axis, and its top on a depth axis.
+- `b_pos`: Position of the unit's stratigraphic base
+- `t_pos`: Position of the unit's stratigraphic top
+
+`b_pos` and `t_pos` name the base and top directly on any axis; on a depth axis, `b_pos`
+is the larger number.
+
+For physical thicknesses of units in **Composite columns**, see the
+[thickness fields](#thickness).
 
 #### Constraints
 
-- Every unit needs a `b_pos` (`position` and `pos` are synonyms); rows without one are dropped.
-  `t_pos` is optional: a blank `t_pos` is taken from the `b_pos` of the next unit up. The topmost
-  unit therefore needs its own `t_pos`, or a final row above it that carries only a `b_pos` to mark
-  the top of the column (see below).
-- All `b_pos`/`t_pos` pairs must have a consistent ordering (upwards or
-  downwards, depending on whether the column is organized in terms of depth or
-  height). Composite Columns can use either ordering, but it must be
-  consistent within a column.
-- Units that are unbounded at the top or bottom of a section are dropped during
-  ingestion, but their `t_pos`,`b_pos` values are still used to infer the
-  bounds of units above or below. In practice, this can allow a section to be
-  defined with a single `position` column, if an unbounded unit is included at
-  the top.
-- Complex overlapping relationships can be described by units that share
-  `b_pos`/`t_pos` values.
-- Composite Columns also need `b_pos`, as an ordinal sequence (e.g., `1`, `2`, `3`, … from oldest
-  to youngest). Row order in the sheet is not used, so rows can be sorted freely.
+- A unit extends from its surface to the next surface along the axis. On height and
+  depth axes, that is the next row's position; on an age axis, it is the next number.
+- For gaps or overlaps, give `b_pos` and `t_pos` explicitly. Explicit
+  values override those inferred from adjacent rows. Complex overlapping relationships
+  can be described by units that share `b_pos`/`t_pos` values.
+- `b_pos` must lie stratigraphically below `t_pos`: it is the smaller number on a height
+  or age axis, and the larger on a depth axis.
+- On height and depth axes, the last row along the axis is the empty closing row
+  (see [How positions work](#how-positions-work)): it closes the unit before it and is
+  not a unit itself, so its descriptive values are ignored. A `b_int` / `b_prop` on it
+  dates the closing surface. Instead of a closing row, the last unit can give an explicit
+  `t_pos` (`b_pos` on a depth axis).
+- A `height` column on a depth axis, or a `depth` column on a height axis, raises a warning,
+  since it usually means `axis_type` is wrong.
+- Every row needs a position (`position`, `b_pos` or `t_pos`) on every axis, Composite
+  Columns included. Row order in the sheet is never used, so rows can be sorted freely.
+  Rows without a position are left out, with a warning.
+
+#### Age axes
+
+On an age axis, positions are a sequence of events numbered forward in time, with `1`
+the oldest. Each number names a stratigraphic surface: a unit at position `n` rests on
+surface `n` and is capped by surface `n + 1`.
+
+- Units with consecutive numbers are in contact. A skipped number is a missing event:
+  time that passed with no rock recorded.
+- Units that share a number are laterally equivalent.
+- A unit spanning several events gives both `b_pos` and `t_pos`.
+- Positions order the column's surfaces but carry no age of their own. Each surface takes
+  its age from the age model (see [Chronostratigraphic position](#chronostratigraphic-position)):
+  between tie points, surfaces are spaced evenly in time by their numbers.
 
 #### Attribute filling
 
-For **Measured sections** (`col_type: "section"`), units are often defined at
-small (meter- to sub-meter) scale, reflecting the scale of rock attributes
-captured during field stratigraphic measurement or core logging. It can be
-tedious to enter repeated values for attributes that change infrequently.
+For **Measured sections**, units are often defined at small (meter- to sub-meter)
+scale, reflecting the scale of rock attributes captured during field stratigraphic
+measurement or core logging. It can be tedious to enter repeated values for attributes
+that change infrequently.
 
-Unit description fields can be automatically filled into blank cells from
-the unit above. This allows gradually changing attributes within a wider grouping to be
-entered intuitively. For instance, a single `strat_name` setting at the top
-of a recognized unit can be applied to an entire set of stratigraphic
-measurement below it, down to the next unit where a new value is entered.
+With filling enabled (`fill_values: y` in the **Columns** or **Metadata** sheet; off by
+default), descriptive fields left blank are carried from the preceding unit. For
+instance, a single `strat_name` at the base of a formation can be applied to every
+measured unit above it, up to the next unit where a new value is entered.
 
-- Filling is turned on with `fill_values: y` in the **Metadata** sheet; it is off by default.
-- Values are filled **down**: units are ordered by `b_pos`, highest first, and a blank
-  cell takes the value of the nearest unit above it that has one. For a height-based
-  measured section, enter a value at the **top** of the interval it applies to.
-- To stop a value from filling further down, enter `none` in a cell. That cell, and
-  the blank cells below it, are left empty.
-- Filled fields: `lithology`, `minor_lith`, `color`, `grainsize`, `strat_name`,
-  `unit_name`, and `facies`.
-- Not filled: `environment`, `unit_description`, `comments`, `basal_surface`,
-  `lateral_relationship`, and the chronostratigraphic fields (`b_int`, `t_int`,
+- A blank cell in a filled field takes the value of the preceding unit along the axis,
+  in the direction position numbers increase: values carry **upward** on a height axis and
+  **downward** on a depth axis. Enter a value at the base of the interval it applies to
+  in a measured section, and at the top of the interval in a core. Cells holding only
+  spaces count as blank.
+- `none` (in any case) in a filled field means the unit has no value, and ends the run.
+- Values carry within a section, not between sections.
+- Filled fields: `lithology`, `minor_lith`, `environment`, `grainsize`, `color`,
+  `strat_name`, `unit_name`, `facies`.
+- Never filled: `unit_description`, `comments`, `basal_surface`, `lateral_relationship`,
+  `covered`, the positional fields, and the chronostratigraphic fields (`b_int`, `t_int`,
   `b_prop`, `t_prop`), which follow their own rules
   (see [Chronostratigraphic position](#chronostratigraphic-position)).
+- [Covered](#lithology) units take and pass on values like any other unit. A blank
+  lithology directly above a covered unit therefore inherits that unit's inferred lithology.
+- Filling never applies on an age axis. Positions there record the order of events, and
+  lateral equivalents share positions, so the preceding unit is not well defined.
 
 ### Chronostratigraphic position
 
@@ -140,10 +219,15 @@ Some additional approaches to chronostratigraphic compilation are described in t
 
 #### Constraints
 
-- A unit's base age is its `b_int` and `b_prop`. A blank `b_prop` is read as `0` (the oldest end of
-  the interval), so give an estimate rather than leaving it blank.
-- A blank `t_int` / `t_prop` is taken from the `b_int` / `b_prop` of the next unit up, so usually
-  only the topmost unit needs them. A `t_int` with a blank `t_prop` is read as `1` (the youngest end).
+- These fields constrain surfaces: `b_int`/`b_prop` set the age of the unit's base surface, and
+  `t_int`/`t_prop` the age of its top surface. Neither is required; a surface given one is a tie point.
+- A blank `b_prop` is read as `0` (the oldest end of the interval), so give an estimate rather than
+  leaving it blank. A `t_int` with a blank `t_prop` is read as `1` (the youngest end).
+- Adjacent units share a surface, so a surface can be constrained from either side: by the base
+  of the unit above it or the top of the unit below it. A unit with only `b_int` takes its top age
+  from the unit above, so usually only the topmost unit needs `t_int`/`t_prop`, or the empty
+  closing row a `b_int`/`b_prop` (see [How positions work](#how-positions-work)). If the two sides
+  disagree, the narrower interval is used and a warning is raised.
 - `b_int` must be older than `t_int` (if both provided)
 - `b_prop` and `t_prop` must be between 0 and 1
 - Correlated horizons in different columns should be given the same `b_int` and `b_prop`.
@@ -202,8 +286,10 @@ The lithology fields collectively describe the type of rock present in a unit.
   - Lithology attributes of type "grains": `fine-grained`, `coarse-grained`
   - Common shorthands: `ms`, `s`, `vf`, `f`, `m`, `c`, `p` (**Not recommended**; use full terms where possible)
   - Numeric values, in _φ_ units
-- `covered`: Boolean field to denote whether the unit is covered (implying that any lithology information is uncertain).
-  **Note:** This field is not currently used during ingestion
+- `covered`: Boolean field to denote that the unit is present but unexposed. A covered unit keeps its place
+  and thickness in the column, and time passes through it in the age model. Lithology and other descriptions
+  given for a covered unit are treated as inferred. Ingested as `outcrop: covered` on the unit.
+  Covered units on a depth axis raise a warning.
 
 #### Constraints and format
 
@@ -291,8 +377,11 @@ These will override project-level defaults where provided.
 See [Chronostratigrahic position](#chronostratigraphic-position) for more details.
 
 - `ref_ids`: References (keyed to refs table); comma- or semicolon-separated list
-- `axis_type` : Default axis type; defaults to `age` for Composite Columns; filled from defaults if not given
+- `axis_type` : `height`, `depth` or `age` (see [Column position](#column-position)); defaults to `age` for
+  Composite Columns and `height` for Measured sections
 - `col_type`: `section` or `column` (defaults to `column` for chronostratigraphy; `section` for lithostratigraphy)
+- `fill_values`: Whether to fill blank unit attributes along the axis (see [Attribute filling](#attribute-filling));
+  overrides the **Metadata** default. Accepts the same values
 - `rgeom`: Reference geometry of the column, its "area of influence" (optional; falls back to `geom` if not provided)
 - `b_int`: Lowest interval considered during the drafting of the column (if applicable)
 - `t_int`: Highest interval considered during the drafting of the column (if applicable)
@@ -306,7 +395,7 @@ tie points in the **Units** sheet.
 
 For most columns, `rgeom` will not be set. This field handles cases where a column is assigned an "area of influence" beyond its
 actual measured location. This is useful to denote that certain columns are representative of a study area. In most cases,
-Macrostrat will automatically infer this information. 
+Macrostrat will automatically infer this information.
 
 Column location fields (both `geom` and `rgeom`) can also be provided as layers (with `col_id` and/or `project_id`
 fields to map  to specific columns) in an associated GIS file.
@@ -333,10 +422,11 @@ within the project.
 ### Column type defaults
 
 - `col_type` : Default column type (`section` or `column`); filled from project defaults if not given
-- `axis_type` : Default axis type; defaults to `age` for Composite Columns; filled from defaults if not given
-- `fill_values`: Whether to fill blank unit attribute values (`strat_name`, `lithology`, and related fields) from the
-  unit above. `y`, `yes` or `true` turns filling on; anything else, or a missing row, leaves it off. Values always
-  fill **down** (see [Attribute filling](#attribute-filling)).
+- `axis_type` : Default axis type: `height`, `depth` or `age` (see [Column position](#column-position)); defaults
+  to `age` for Composite Columns and `height` for Measured sections
+- `fill_values`: Default for whether to fill blank unit attributes along the axis
+  (see [Attribute filling](#attribute-filling)). `y`, `yes` or `true` turns filling on; `n`, `no`, `false` or a
+  missing row leaves it off. Any other value leaves it off, with a warning.
 
 ### Spatial and stratigraphic context
 
@@ -444,8 +534,12 @@ Some fields have common synonyms that will be recognized during ingestion. Here 
 - `col_id`: `column_id`, `column_slug`, `col_slug`
 - `lithology`: `major_lithology`, `major_lith`, `lith`
 - `minor_lith`: `minor_lithology`
-- `b_pos`: `position`, `pos`, `height`, `depth`, `b_position`, `bottom_position`
-- `t_pos`: `top_position`
+- `position`: `pos`, `height`, `depth` (the surface where the unit begins along the axis; see [Column position](#column-position))
+- `b_pos`: `b_position`, `bottom_position`, `base_position`, `position_bottom`, `bottom`, `base`, `bottom_height`,
+  `base_height`, `bottom_depth`, `base_depth`
+- `t_pos`: `t_position`, `top_position`, `position_top`, `top`, `top_height`, `top_depth`
+- `unit_name`: `name`
+- `unit_description`: `description`
 - `b_int`: `b_interval`, `interval`
 - `t_int`: `top_interval`, `t_interval`
 - `geom`: `geometry`
