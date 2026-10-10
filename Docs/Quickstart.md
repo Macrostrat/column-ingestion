@@ -20,8 +20,8 @@ This guide walks through the simplest case: a measured section logged by height,
 
 - **Metadata**: project information
 - **Columns**: location and general information: _multiple columns per workbook are allowed_
-- **Units**: core information
-- **
+- **Units**: The core sheet: position, unit, surface information, and age model information
+- **Refs**: where the columns came from
 
 ## Filling the workbook
 
