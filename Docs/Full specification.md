@@ -5,9 +5,9 @@ Version `0.2.0` - October 9, 2026
 Macrostrat stratigraphic columns can be ingested from tabular formats (such as Excel spreadsheets)
 that follow a defined template. Details on the required sheets and fields are provided below.
 
-- New to the format? The [**quickstart guide**](./Column%20ingestion%20quickstart.md) covers the essentials for building
+- New to the format? The [**quickstart guide**](./Quickstart.md) covers the essentials for building
   a column spreadsheet; this document describes every sheet, field, and option.
-- See the [**Examples**](https://github.com/Macrostrat/column-ingestion/tree/main/Examples) folder for example datasets.
+- See the [**Examples**](./Examples.md) for example datasets.
 - The [**Future updates**](./Future%20updates.md) documents collects features that may be included in future versions of this format.
 
 This format can help prepare columns for assimilation into Macrostrat and may be useful as a lightweight archival
@@ -317,7 +317,7 @@ The lithology fields collectively describe the type of rock present in a unit.
   to be present in equal proportions.
 - The `minor_lith` field is a shorthand to set lithologies with a `(minor)` proportion by default.
 
-> **Preview how your text is parsed.** The [lithology matcher](https://dev.macrostrat.org/lex/lith-match)
+> **Preview how your text is parsed.** The [lithology matcher](https://dev.macrostrat.org/lex/match/lithologies)
 > runs the ingester's own lithology parser over any `lithology` / `minor_lith`
 > text and shows the lithologies, attributes and proportions it recognises — and
 > flags any words it can't match — so you can refine your wording before you submit.

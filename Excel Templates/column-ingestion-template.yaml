@@ -24,16 +24,19 @@
 # with a `-new` suffix. All are read by the same ingester; they differ only in which
 # fields they offer.
 templates:
-  - name: full
-    output: column-ingestion-template.xlsx
-    title: Macrostrat column ingestion template
+  - name: expanded
+    output: column-ingestion-template-expanded.xlsx
+    title: Macrostrat column ingestion template (expanded)
   - name: simple
     output: column-ingestion-template-simple.xlsx
     title: Macrostrat column ingestion template (simple measured column)
 
-# The hand-written guide this template is read alongside. `make test` checks that every
-# field below is named in the guide's section for its tab, unless marked `quickstart: false`.
-quickstart: ../Column ingestion quickstart.md
+# The hand-written guide the templates are read alongside, and the template it walks
+# through. `make test` checks that every field of that template is named in the guide's
+# section for its tab, unless marked `quickstart: false`.
+quickstart:
+  guide: ../Docs/Quickstart.md
+  template: simple
 
 # Number of rows that dropdowns, number checks and highlights cover.
 max_rows: 2000
@@ -73,10 +76,12 @@ readme:
   tab_color: "404040"
   blocks:
     - paragraph: Fill the tabs left to right; the step numbers match the quickstart guide.
+    - paragraph: This expanded template offers every field of the format, beyond the simple case the quickstart guide walks through. The full specification describes each one.
+      only: [expanded]
     - link: Column ingestion quickstart guide
-      url: https://github.com/Macrostrat/column-ingestion/blob/main/Column%20ingestion%20quickstart.md
+      url: https://github.com/Macrostrat/column-ingestion/blob/main/Docs/Quickstart.md
     - link: Full specification of the format
-      url: https://github.com/Macrostrat/column-ingestion/blob/main/Full%20specification.md
+      url: https://github.com/Macrostrat/column-ingestion/blob/main/Docs/Full%20specification.md
     - paragraph: Each data tab is followed by an "(example)" tab showing what every field means, its format, and filled-in example rows. Type your own data on the plain tabs (metadata, columns, units, facies, refs). The example tabs are ignored on upload.
     - paragraph: Hover over any header cell (red triangle) for the same explanation. Do NOT rename tabs or headers, and do not add rows above the headers.
     - heading: Header colours
@@ -86,7 +91,7 @@ readme:
         - [1, metadata, "Project name plus a few settings (pre-filled for a measured column; change if needed)."]
         - [2, columns, "One row per column (an outcrop or core site): col_id + lat/lng."]
         - item: [3, units, "One row per unit. A: heights (b_pos = base of the unit in metres above the column base; t_pos only on the topmost unit, or end with an empty closing row holding only b_pos). B: rock (lithology, plus strat_name and/or unit_name). C: ages at tie points (b_int + b_prop)."]
-          only: [full]
+          only: [expanded]
         - item: [3, units, "One row per unit. A: position = height of the unit's base in metres above the column base; end with an empty closing row holding only the height of the top. B: rock (lithology, plus strat_name and/or unit_name). C: ages at tie points (b_int + b_prop)."]
           only: [simple]
         - [4, facies, "Totally optional: named lists of lithologies and environments that units can refer to."]
@@ -107,7 +112,7 @@ readme:
           items:
             - Every col_id exists on columns (the dropdown enforces this).
             - item: Every column has a top (t_pos on the top unit, or an empty closing row with only b_pos).
-              only: [full]
+              only: [expanded]
             - item: Every column ends with an empty closing row (only col_id and position).
               only: [simple]
             - Every column has at least 2 age tie points (b_int + b_prop).
@@ -115,7 +120,7 @@ readme:
             - Every interval name is spelled as in Macrostrat (look it up with the link below).
             - Every unit has a lithology, of its own or from its facies.
             - item: Covered intervals are units named covered (or covered = y), and missing rock is a row named gap.
-              only: [full]
+              only: [expanded]
             - item: Covered intervals are units named covered, and missing rock is a row named gap.
               only: [simple]
         - tab: refs
@@ -134,13 +139,13 @@ readme:
       url: https://dev.macrostrat.org/lex/lithologies
     - heading: Good to know
     - paragraph: Units can be in any order; the ingester sorts them by b_pos. The top of each unit is taken from the base of the unit above. The topmost unit's top is its own t_pos, or an empty closing row above it holding only col_id and b_pos.
-      only: [full]
+      only: [expanded]
     - paragraph: Units can be in any order; the ingester sorts them by position. Each unit runs up to the next row's position, so the column ends with an empty closing row holding only col_id and the height of its top.
       only: [simple]
     - paragraph: A blank b_prop counts as 0 (the oldest end of the interval), so make an educated guess instead.
     - paragraph: Correlated horizons in different columns get the same b_int and b_prop.
     - paragraph: "Covered intervals: add a unit named covered (as its unit_name or lithology), or set covered = y on a unit and give your best inference of its lithology."
-      only: [full]
+      only: [expanded]
     - paragraph: "Covered intervals: add a unit named covered (as its unit_name or lithology)."
       only: [simple]
     - paragraph: "Gaps (missing rock): add a row named gap at the base of the missing interval. No unit is created between it and the next row, and explain the gap in comments."
@@ -292,7 +297,7 @@ sheets:
         format: A col_id from the columns tab
         validation: {type: list, range: "columns!$A$2:$A$500", prompt: Pick a col_id from the columns tab}
       - name: section_id
-        only: [full]
+        only: [expanded]
         kind: optional
         width: 10
         meaning: Leave blank if the column is one continuous section. Use a new ID only where the age model breaks (e.g. a fault).
@@ -305,14 +310,14 @@ sheets:
         format: Number (metres)
         validation: {type: decimal, operator: greaterThan, value: -100000, prompt: "Base of the unit, metres above column base"}
       - name: b_pos
-        only: [full]
+        only: [expanded]
         kind: required
         width: 10
         meaning: HEIGHT OF THE BOTTOM of this unit, in metres measured up from the base of the column (base = 0). Every unit needs one.
         format: Number (metres)
         validation: {type: decimal, operator: greaterThan, value: -100000, prompt: "Bottom of the unit, metres above column base"}
       - name: t_pos
-        only: [full]
+        only: [expanded]
         kind: required
         width: 10
         meaning: HEIGHT OF THE TOP of this unit. Fill it ONLY on the topmost unit of each column, or where units overlap; every other top is taken from the b_pos of the unit above. Or leave it blank and end the column with an empty closing row holding only col_id and b_pos.
@@ -335,20 +340,20 @@ sheets:
         format: Text; several lithologies separated by ; (names at dev.macrostrat.org/lex/lithologies)
         link: https://dev.macrostrat.org/lex/lithologies
       - name: minor_lith
-        only: [full]
+        only: [expanded]
         kind: optional
         width: 20
         meaning: Lesser lithologies within the unit.
         format: Text, same format as lithology
         link: https://dev.macrostrat.org/lex/lithologies
       - name: covered
-        only: [full]
+        only: [expanded]
         kind: optional
         width: 9
         meaning: '"y" if the unit is covered: present but not exposed. Its lithology is then your best inference (e.g. shale for a recessive interval).'
         format: y, or blank
       - name: basal_surface
-        only: [full]
+        only: [expanded]
         kind: optional
         width: 14
         meaning: Type of contact at the bottom of the unit.
@@ -366,14 +371,14 @@ sheets:
         format: Number from 0 to 1
         validation: {type: decimal, operator: between, value: 0, max: 1, prompt: "0 = oldest end, 1 = youngest end"}
       - name: t_int
-        only: [full]
+        only: [expanded]
         kind: tie_point
         width: 13
         meaning: "Age at the top. Usually blank: it is taken from the unit above. Fill only on the top unit if its age is known, or give the empty closing row a b_int instead."
         format: Interval name, or blank (dev.macrostrat.org/lex/intervals)
         link: https://dev.macrostrat.org/lex/intervals
       - name: t_prop
-        only: [full]
+        only: [expanded]
         kind: tie_point
         width: 8
         meaning: Where in t_int the top falls (0-1). Usually blank.
@@ -402,25 +407,25 @@ sheets:
     example:
       tab_color: "BDD7EE"
       rows: # column MM9, top to bottom
-        - only: [full]
+        - only: [expanded]
           col_id: MM9
           b_pos: 6.16
           t_pos: 7.54
           lithology: cross-stratified sandstone
           strat_name: Wood Canyon Formation
           comments: Top of measured section, so t_pos is filled.
-        - only: [full]
+        - only: [expanded]
           col_id: MM9
           b_pos: 5.31
           lithology: pebble, cobble conglomerate
           strat_name: Wood Canyon Formation
           comments: Top comes from the unit above (6.16 m).
-        - only: [full]
+        - only: [expanded]
           col_id: MM9
           b_pos: 4.93
           lithology: cross-stratified sandstone
           strat_name: Wood Canyon Formation
-        - only: [full]
+        - only: [expanded]
           col_id: MM9
           b_pos: 4.77
           lithology: pebble, cobble conglomerate
@@ -429,7 +434,7 @@ sheets:
           b_prop: 0.75
           age_model_notes: "Placeholder age: base and datum tied within the Terreneuvian; proportions are best guesses."
           comments: "Datum bed: age tie point, same b_int/b_prop in every column."
-        - only: [full]
+        - only: [expanded]
           col_id: MM9
           b_pos: 0
           lithology: cross-stratified sandstone
