@@ -10,9 +10,20 @@ This guide walks through the simplest case: a measured section logged by height,
 
 **Surfaces and units.** Each row of the `units` sheet describes two things. Its position marks a *surface*, the base of a unit, and ages are pinned to surfaces at tie points. The rest of the row gives the *attributes* of the unit above that surface, up to the next one: its names, lithology and facies.
 
-**Extensibility.** Start with the least complicated description that fits your data, and add detail only where you need it: the simple template has the essential fields, the expanded template adds the rest, and the [full specification](./Full%20specification.md) describes every option. Beyond that, you can add whatever extra columns or sheets you like. The ingester skips columns it doesn't know and ignores extra sheets, so other data can travel in the same workbook. For example, the [Zebra River Group measured sections](https://github.com/Macrostrat/column-ingestion/raw/main/Examples/Zebra-River-Group-Measured-sections-full.xlsx) carry chemostratigraphic (carbon isotope) measurements, samples, notes and sequence-stratigraphic surfaces on extra sheets, positioned within the same columns.
+**Extensibility.**
 
-## Building the workbook
+- Any format that includes the minimum columns is valid, and you can add detail as needed: the simple template has the essential fields, the expanded template adds more, and the [full specification](./Full%20specification.md) describes every option.
+- Unrecognized values (e.g., detailed lithologies not in our dictionaries) are skipped
+- The ingester skips columns it doesn't know and ignores extra sheets, so you can add _whatever extra columns or sheets you want_. For example, the [Zebra River Group measured sections](https://github.com/Macrostrat/column-ingestion/raw/main/Examples/Zebra-River-Group-Measured-sections-full.xlsx) carry chemostratigraphic (carbon isotope) measurements, samples, notes and sequence-stratigraphic surfaces on extra sheets, positioned within the same columns.
+
+## Workbook sheets
+
+- **Metadata**: project information
+- **Columns**: location and general information: _multiple columns per workbook are allowed_
+- **Units**: core information
+- **
+
+## Filling the workbook
 
 One `.xlsx` workbook per project. The template's tabs are in the same order as the steps below, and each header has a note you can see by hovering over it. Each data tab is followed by an **"(example)" tab** showing what every field means, its format, and filled-in rows. Type your data on the plain tabs; the example tabs are ignored on upload. Header colours: 🟥 required · 🟧 required, one of a pair (`strat_name` / `unit_name`) · 🟨 recommended · 🟦 age tie point · ⬜ optional.
 
@@ -41,15 +52,15 @@ One row per column. A column is one outcrop or core site.
 | Field | Notes |
 |---|---|
 | **`col_id`** | Short ID, e.g. `MM1`. The units sheet uses it. |
-| `col_name`, `col_group` | `col_group` groups related columns together. |
+| `col_name`, `name` | Name of the column |
 | **Location** | Either **`lat` + `lng`** (decimal degrees, west is negative) **or** `geom`: a `POLYGON(...)` for an area, or a `LINESTRING(...)` for a measured traverse. `geom` does **not** accept a `POINT`. |
 | `ref_ids` | One or more `ref_id`s from the `refs` sheet. |
 
-## 3. `units`: the rocks, one row per unit
+## 3. `units`: core column information
 
 A unit is any chunk you can describe, from a single bed up to a whole formation. Row order doesn't matter, because the ingester sorts by height.
 
-**Step A: heights**
+### Height
 
 | Field                                | Notes |
 |--------------------------------------|---|
