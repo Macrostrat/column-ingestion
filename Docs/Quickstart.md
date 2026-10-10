@@ -30,8 +30,9 @@ Every sheet, field, and option is described in the [full specification](./Full%2
 | `col_type` | `measured`, for a measured section. The template starts as `measured`. |
 | `axis_type` | `height` (metres up from the base). |
 | `position_unit` | `meters` |
-| `fill_values` | `y` copies lithology, strat_name, etc. **up** into blank cells above, so enter a value at the base of the interval it applies to. Type `none` in a cell to stop it. |
 | `comments` | How heights were obtained, e.g. "digitized from Fig. 11". |
+
+The `fill_values` key is explained with the `units` sheet below.
 
 ## 2. `columns`: where each column is
 
@@ -67,6 +68,7 @@ A unit is any chunk you can describe, from a single bed up to a whole formation.
 
 - **Gaps:** where rock is missing (e.g., missing core), add a row named `gap` (as its `unit_name`). An empty row with a position terminates the column and is equivalent.
 - **Covered intervals:** `covered` in the `unit_name` or `lithology` field, or a separate `covered` = `y/n` column.
+- **Repeated values:** set `fill_values` to `y` on the `metadata` sheet to copy lithology, strat_name, etc. **up** into blank cells above, so enter a value at the base of the interval it applies to. Type `none` in a cell to stop it.
 
 > **Tip:** the ingester parses `lithology` text into Macrostrat lithologies, attributes and proportions. Paste your wording into the **[lithology matcher](https://dev.macrostrat.org/lex/match/lithologies)** to see exactly what it recognises — and which words it can't match — before you submit.
 
