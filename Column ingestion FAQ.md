@@ -10,9 +10,12 @@ is described in the [full specification](./Full%20specification.md).
 
 > [!question] Where do I get the template?
 
-Download the
-[guided template](https://github.com/Macrostrat/column-ingestion/raw/main/Excel%20Templates/column-ingestion-template.xlsx).
-Its tabs follow the steps of the [quickstart guide](./Column%20ingestion%20quickstart.md), its headers are
+There are two. The
+[simple template](https://github.com/Macrostrat/column-ingestion/raw/main/Excel%20Templates/column-ingestion-template-simple.xlsx)
+is a measured column with one `position` per unit and only the essential fields; the
+[full template](https://github.com/Macrostrat/column-ingestion/raw/main/Excel%20Templates/column-ingestion-template.xlsx)
+has every field. Both are read the same way on upload. Their tabs follow the steps of
+the [quickstart guide](./Column%20ingestion%20quickstart.md), their headers are
 coloured by whether a field is required, and each data tab is followed by an
 "(example)" tab showing what every field means, its format, and filled-in rows. A
 [worked example](https://github.com/Macrostrat/column-ingestion/raw/main/Examples/hogan-2011-marble-mountains.xlsx)
@@ -25,11 +28,12 @@ continuous age model; you only need more than one where the age model breaks, fo
 example across a fault. A **unit** is one row of the `units` sheet: any interval of
 rock you can describe as a single chunk, from one bed to a whole formation.
 
-> [!question] Should I choose "section" or "column" for `col_type`?
+> [!question] Should I choose "measured" or "composite" for `col_type`?
 
-Use `section` for a measured section or core, where units are placed by measured
-height. Use `column` for a composite or chronostratigraphic column, where units are
-placed by age. Most field-measured data are sections.
+Use `measured` for a measured section or core, where units are placed by measured
+height. Use `composite` for a composite or chronostratigraphic column, where units are
+placed in age order. Most field-measured data are measured columns. The older values
+`section` and `column` are still read the same way.
 
 > [!question] Can I put several columns in one workbook?
 
@@ -40,11 +44,12 @@ with the `col_id` of the column it belongs to.
 
 > [!question] Do I need to enter both `b_pos` and `t_pos` for every unit?
 
-No. Every unit needs a `b_pos`, the height of its base. Only the topmost unit of each
-column, and any unit below a gap, needs a `t_pos`; every other unit's top is taken from
-the base of the unit above it. Instead of a `t_pos` on the topmost unit, you can end the
-column with an empty closing row: a row with only `col_id` and a `b_pos` giving the height
-of the top of the column. It is not a unit, but a `b_int` and `b_prop` on it date the top. Row order doesn't matter, because units are sorted by height.
+No. Every unit needs one position, the height of its base: `position` in the simple
+template, `b_pos` in the full one. Every unit's top is taken from the base of the unit
+above it. The topmost unit has nothing above it, so end the column with an empty closing
+row: a row with only `col_id` and a position giving the height of the top of the column.
+It is not a unit, but a `b_int` and `b_prop` on it date the top. In the full template, a
+`t_pos` on the topmost unit works instead, and is also how overlapping units are given. Row order doesn't matter, because units are sorted by height.
 
 > [!question] How small or large should a unit be?
 
@@ -54,11 +59,13 @@ simpler option and note any generalizations in `comments`.
 
 > [!question] How do I record a gap or a covered interval?
 
-A covered interval (rock that is there but not exposed) is a unit like any other: set
-`covered` to `y`, and give your best inference of its lithology, such as `shale` for a
-recessive interval. A gap (missing rock) is not a unit: give the unit below it its own
-`t_pos`, so its top does not meet the base of the unit above, and say what it is in
-`comments`. A gap does not need a new `section_id` unless the age model changes across it.
+A covered interval (rock that is there but not exposed) is a unit like any other. Name
+it `covered`, as its `unit_name` or in place of its `lithology`; or, if you can infer the
+lithology, such as `shale` for a recessive interval, write that and set `covered` to `y`.
+A gap (missing rock) is not a unit: add a row named `gap` (as its `unit_name`) at the
+base of the missing interval, and no unit is created between it and the next row. Say
+what the gap is in `comments`. A gap does not need a new `section_id` unless the age
+model changes across it.
 
 > [!question] Why are my units saved with the name "default"?
 
@@ -122,8 +129,8 @@ Not yet: ages are entered as intervals and proportions. Record dated horizons in
 
 > [!question] My interval name was not recognized.
 
-Interval names must match Macrostrat's exactly. Pick them from the dropdown on the
-`b_int` and `t_int` columns of the template.
+Interval names must match Macrostrat's exactly. Look them up in
+[Macrostrat's interval list](https://dev.macrostrat.org/lex/intervals).
 
 ## Locations and sources
 
@@ -141,8 +148,9 @@ instead; a `POINT` in `geom` is rejected.
 
 > [!question] I digitized a column from a figure. What should I include?
 
-Paste the original figure on an extra tab of the workbook (extra tabs are ignored on
-upload), and say in the `metadata` sheet's `comments` how heights were measured, for
+Paste the original figure on the template's `images` tab, and name it there with its
+figure number and source (the tab is ignored on upload). Say in the `metadata` sheet's
+`comments` how heights were measured, for
 example "digitized from Fig. 11a with WebPlotDigitizer". This lets others see what was
 generalized.
 
