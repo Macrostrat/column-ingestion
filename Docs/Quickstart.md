@@ -1,6 +1,8 @@
 # Column ingestion quickstart
 
-This guide walks through the simplest case: a measured section logged by height, built with the **[simple template](https://github.com/Macrostrat/column-ingestion/raw/main/Excel%20Templates/column-ingestion-template-simple.xlsx)**. Download it and fill it in as you read. When your data need more, the **[expanded template](https://github.com/Macrostrat/column-ingestion/raw/main/Excel%20Templates/column-ingestion-template-expanded.xlsx)** offers every field of the format; it has the same tabs and is read the same way on upload.
+## Start with the [Simple template](https://github.com/Macrostrat/column-ingestion/raw/main/Excel%20Templates/column-ingestion-template-simple.xlsx)
+
+This guide walks through the simplest case: a measured section logged by height. Download it and fill it in as you read. The **[expanded template](https://github.com/Macrostrat/column-ingestion/raw/main/Excel%20Templates/column-ingestion-template-expanded.xlsx)** offers every field of the format; it has the same tabs and is read the same way on upload to Macrostrat
 
 ## Concepts
 
