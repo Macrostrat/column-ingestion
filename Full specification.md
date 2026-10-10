@@ -60,10 +60,10 @@ them, laid out along the column's **axis** (`axis_type`, set in the
 [**Columns**](#column-metadata-fields) or [**Metadata**](#column-type-defaults) sheet):
 
 - `height`: measured position, increasing upward (e.g., meters above the base of a section).
-  The default for **Measured sections** (`col_type: "section"`).
+  The default for **Measured columns** (`col_type: measured`).
 - `depth`: measured position, increasing downward (e.g., meters below the top of a core).
 - `age`: an ordination of stratigraphic surfaces, numbered forward in time from oldest to youngest
-  (see [Age axes](#age-axes)). The default for **Composite columns** (`col_type: "column"`).
+  (see [Age axes](#age-axes)). The default for **Composite columns** (`col_type: composite`).
 
 #### How positions work
 
@@ -105,8 +105,10 @@ the base of the core.
 
 The rest of the format builds on this model:
 
-- **Gaps and overlaps** break the stack, so the units on either side give explicit
-  `b_pos` / `t_pos` (see [Constraints](#constraints)).
+- **Gaps** break the stack: a row named `gap` marks the base of missing rock.
+  **Overlaps** need explicit `b_pos` / `t_pos` (see [Constraints](#constraints)).
+- **Covered intervals** are units like any other, marked by a row named `covered` or by
+  the `covered` field.
 - **Age axes** number surfaces instead of measuring them. The next surface is simply the
   next number, so no closing row is needed (see [Age axes](#age-axes)).
 - **Ages** belong to surfaces too: `b_int` / `t_int` constrain the surfaces a unit begins
@@ -132,7 +134,13 @@ For physical thicknesses of units in **Composite columns**, see the
 
 - A unit extends from its surface to the next surface along the axis. On height and
   depth axes, that is the next row's position; on an age axis, it is the next number.
-- For gaps or overlaps, give `b_pos` and `t_pos` explicitly. Explicit
+- A row whose `unit_name` or `lithology` is `gap` marks missing rock: its position ends
+  the unit below it, and no unit is created up to the next row. Its other descriptive
+  values are ignored; a `b_int` / `b_prop` on it dates its surface.
+- A row whose `unit_name` or `lithology` is `covered` is a covered unit, as with
+  `covered: y` (see [Lithology](#lithology)). Written in place of the lithology, it leaves
+  the lithology unknown.
+- For overlaps, or for gaps without a `gap` row, give `b_pos` and `t_pos` explicitly. Explicit
   values override those inferred from adjacent rows. Complex overlapping relationships
   can be described by units that share `b_pos`/`t_pos` values.
 - `b_pos` must lie stratigraphically below `t_pos`: it is the smaller number on a height
@@ -164,7 +172,7 @@ surface `n` and is capped by surface `n + 1`.
 
 #### Attribute filling
 
-For **Measured sections**, units are often defined at small (meter- to sub-meter)
+For **Measured columns**, units are often defined at small (meter- to sub-meter)
 scale, reflecting the scale of rock attributes captured during field stratigraphic
 measurement or core logging. It can be tedious to enter repeated values for attributes
 that change infrequently.
@@ -180,6 +188,8 @@ measured unit above it, up to the next unit where a new value is entered.
   in a measured section, and at the top of the interval in a core. Cells holding only
   spaces count as blank.
 - `none` (in any case) in a filled field means the unit has no value, and ends the run.
+- `covered` and `gap` written as a `unit_name` or `lithology` describe that row only: they
+  are not carried, and a run continues past them.
 - Values carry within a section, not between sections.
 - Filled fields: `lithology`, `minor_lith`, `environment`, `grainsize`, `color`,
   `strat_name`, `unit_name`, `facies`.
@@ -197,7 +207,7 @@ measured unit above it, up to the next unit where a new value is entered.
 Chronostratigraphic position columns are used to tie a column's positional axis
 to geologic time. Ages are entered only at **tie points**, and an age model fills in the rest.
 This is essential for **Composite columns** (since the primary axis
-of the column is based on age) but optional for **Measured sections**.
+of the column is based on age) but optional for **Measured columns**.
 
 - Each section needs **at least two tie points at different positions** for an age model to be built.
   With fewer, the ingester skips the age model for that section (with a warning), and its units keep
@@ -209,7 +219,8 @@ of the column is based on age) but optional for **Measured sections**.
 - Boundaries you give are recorded with status `relative`; boundaries the model fills in are
   recorded as `modeled`.
 
-- `b_int` : Geologic interval at the bottom boundary of the unit. Name (e.g., "Devonian") or Macrostrat interval ID
+- `b_int` : Geologic interval at the bottom boundary of the unit. Name (e.g., "Devonian") or Macrostrat interval ID;
+  names are listed in [Macrostrat's interval list](https://dev.macrostrat.org/lex/intervals)
 - `t_int` : Geologic age at the top boundary of the unit. Name (e.g., "Devonian") or Macrostrat interval ID
 - `b_prop` : Position of the bottom boundary of the unit, relative to its interval (optional)
 - `t_prop` : Position of the top boundary of the unit, relative to its interval (optional)
@@ -242,7 +253,7 @@ Some additional approaches to chronostratigraphic compilation are described in t
 - `unit_name`: Display name of the rock unit
 - `unit_description`: Original description of the stratigraphic unit from stratigraphic chart or supplemental materials, if provided
 
-These fields are generally important for Composite columns but optional for Measured sections.
+These fields are generally important for Composite columns but optional for Measured columns.
 
 ### Stratigraphic names
 
@@ -289,7 +300,9 @@ The lithology fields collectively describe the type of rock present in a unit.
 - `covered`: Boolean field to denote that the unit is present but unexposed. A covered unit keeps its place
   and thickness in the column, and time passes through it in the age model. Lithology and other descriptions
   given for a covered unit are treated as inferred. Ingested as `outcrop: covered` on the unit.
-  Covered units on a depth axis raise a warning.
+  Covered units on a depth axis raise a warning. Writing `covered` as the unit's `unit_name` or `lithology`
+  does the same (see [Constraints](#constraints)).
+- Lithology names are listed in [Macrostrat's lithology lexicon](https://dev.macrostrat.org/lex/lithologies).
 
 #### Constraints and format
 
@@ -330,7 +343,7 @@ The lithology fields collectively describe the type of rock present in a unit.
 - `max_thickness`: Maximum thickness of the unit (in position units; e.g., meters)
 
 These fields are required for **Composite columns** only. For
-[**Measured sections**](#lithostratigraphic-columns), they will be
+[**Measured columns**](#column-position), they will be
 inferred from the `b_pos` and `t_pos` fields to match the measured physical height of the unit.
 
 ### Misc. unit descriptors (_optional, experimental_)
@@ -378,8 +391,9 @@ See [Chronostratigrahic position](#chronostratigraphic-position) for more detail
 
 - `ref_ids`: References (keyed to refs table); comma- or semicolon-separated list
 - `axis_type` : `height`, `depth` or `age` (see [Column position](#column-position)); defaults to `age` for
-  Composite Columns and `height` for Measured sections
-- `col_type`: `section` or `column` (defaults to `column` for chronostratigraphy; `section` for lithostratigraphy)
+  Composite Columns and `height` for Measured columns
+- `col_type`: `measured` or `composite` (defaults to `composite`). The older names `section` and `column` are
+  read the same way.
 - `fill_values`: Whether to fill blank unit attributes along the axis (see [Attribute filling](#attribute-filling));
   overrides the **Metadata** default. Accepts the same values
 - `rgeom`: Reference geometry of the column, its "area of influence" (optional; falls back to `geom` if not provided)
@@ -421,9 +435,10 @@ within the project.
 
 ### Column type defaults
 
-- `col_type` : Default column type (`section` or `column`); filled from project defaults if not given
+- `col_type` : Default column type (`measured` or `composite`; the older `section` and `column` also work);
+  defaults to `composite`
 - `axis_type` : Default axis type: `height`, `depth` or `age` (see [Column position](#column-position)); defaults
-  to `age` for Composite Columns and `height` for Measured sections
+  to `age` for Composite Columns and `height` for Measured columns
 - `fill_values`: Default for whether to fill blank unit attributes along the axis
   (see [Attribute filling](#attribute-filling)). `y`, `yes` or `true` turns filling on; `n`, `no`, `false` or a
   missing row leaves it off. Any other value leaves it off, with a warning.
@@ -466,8 +481,16 @@ field-based stratigraphy that are used to drive interpretations.
 > Facies are new and experimental in Macrostrat's ingestion system, and do not currently map to a specific
 > data model within Macrostrat.
 
-- `facies_id`: Unique identifier for each facies (string or integer; required)
-- `facies`: Name of the facies (required)
+The sheet is entirely optional. In its simplest form, used by the templates, it is a string-keyed list of
+lithologies and environments with a description:
+
+| `facies_id` | `lithology` | `environment` | `description` |
+|---|---|---|---|
+| F1 | desiccation cracks, laminated, fine sandstone (10%); lime mudstone | peritidal | Mud-cracked lime mudstone with thin laminated sandstone beds. |
+| F2 | hummocky cross stratification, gutter casts grainstone; lime mudstone (minor); shale (minor) | offshore ramp | Storm-reworked grainstone between lime mudstone and shale. |
+
+- `facies_id`: Unique identifier for each facies (string or integer; required), given by units in their `facies` field
+- `facies`: Name of the facies (optional)
 - `facies_group`: Grouping of the facies (optional)
 - `description`: Description of the facies
 - `lithology`: Lithologies associated with the facies, formatted like the `lithology` field in the **Units** sheet
@@ -477,7 +500,9 @@ field-based stratigraphy that are used to drive interpretations.
 ## The `images` sheet
 
 The optional **Images** sheet contains information about images associated with columns in the project,
-and optionally the images themselves (either pasted into the Excel sheet or as separate image files).
+and optionally the images themselves (either pasted into the Excel sheet or as separate image files). The
+templates' `images` tab is this sheet: paste the figure a column was captured from onto it, and describe it
+in a row.
 This is designed to allow the source material for column digitization to be carried alongside the data.
 
 - `col_ids`: Column ID or comma-separated list of IDs (if image contains multiple columns)
@@ -496,7 +521,7 @@ This is designed to allow the source material for column digitization to be carr
 Often, stratigraphic columns are packaged with attribute information that can be presented alongside the column, without
 being part of a core unit definition. Examples include **geochemical data, fossil occurrences, geochronologic data**, or
 notes and interpretations that are outside the scope of Macrostrat's core data models. This is most often the case
-for **Measured sections**, but it can also apply to **Composite Columns**.
+for **Measured columns**, but it can also apply to **Composite Columns**.
 
 Ingested Excel templates can include any number of additional sheets beyond the core sheets defined above.
 

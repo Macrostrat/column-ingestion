@@ -40,30 +40,33 @@ default in the `units` sheet.
 Some documentation is provided in the templates themselves, but this is subsidiary to the full specification
 provided below.
 
-New to the format? Start with the [**quickstart guide**](./Column%20ingestion%20quickstart.md) and the
-[guided template](https://github.com/Macrostrat/column-ingestion/raw/main/Excel%20Templates/column-ingestion-template.xlsx). The template is built to be read alongside the guide: its
+New to the format? Start with the [**quickstart guide**](./Column%20ingestion%20quickstart.md) and one of the
+guided templates: the [simple template](https://github.com/Macrostrat/column-ingestion/raw/main/Excel%20Templates/column-ingestion-template-simple.xlsx)
+(a measured column with one `position` per unit) or the
+[full template](https://github.com/Macrostrat/column-ingestion/raw/main/Excel%20Templates/column-ingestion-template.xlsx)
+(every field). Both are read the same way on upload, and are built to be read alongside the guide: their
 tabs follow the guide's steps, headers are colour-coded by whether a field is required, and each data tab is paired
 with an example tab explaining every field. Common questions are answered in the [**FAQ**](./Column%20ingestion%20FAQ.md).
 
-### Editing the guided template
+### Editing the guided templates
 
-The guided template is generated from a human-readable description,
+The guided templates are generated from one human-readable description,
 [`Excel Templates/column-ingestion-template.yaml`](https://github.com/Macrostrat/column-ingestion/blob/main/Excel%20Templates/column-ingestion-template.yaml): every tab, field,
-header colour, hover note, dropdown and example row is defined there (interval names for the age dropdowns are in
-`Excel Templates/interval-names.txt`). To change the template, edit the YAML and build it with the
+header colour, hover note, dropdown and example row is defined there, and anything marked `only: [<template>]`
+appears only in that template. To change the templates, edit the YAML and build them with the
 `column_template` Python package in this repository:
 
 ```bash
-make template     # build column-ingestion-template-new.xlsx from the YAML, then check the quickstart guide
-make promote      # replace the published template with the -new copy, then run the tests
+make template     # build a -new copy of each template from the YAML, then check the quickstart guide
+make promote      # replace the published templates with the -new copies, then run the tests
 make quickstart   # only check the quickstart guide
-make test         # check the published Excel file and the quickstart guide both match the YAML
+make test         # check the published Excel files and the quickstart guide all match the YAML
 ```
 
-`make template` never touches the published `Excel Templates/column-ingestion-template.xlsx`: it writes
-`column-ingestion-template-new.xlsx` beside it, so the original and the new version can be compared. The `-new` copy
-is a local review file and is ignored by git. Once it looks right, `make promote` copies it over the published
-template; commit that together with the YAML.
+`make template` never touches the published templates in `Excel Templates/`: it writes a `-new` copy beside each
+(e.g. `column-ingestion-template-new.xlsx`), so the original and the new version can be compared. The `-new` copies
+are local review files and are ignored by git. Once they look right, `make promote` copies them over the published
+templates; commit those together with the YAML.
 
 `make test` builds a fresh copy from the YAML and compares it with the published `.xlsx`. It fails after the YAML is
 edited until the new version is promoted, as a reminder that the template people download is out of date (it also
@@ -118,7 +121,7 @@ are present across scales and types of data.
 
 ### Composite columns
 
-**Composite columns** (in Macrostrat, `col_type: "column"`) represent
+**Composite columns** (`col_type: composite`) represent
 chronostratigraphic charts with no direct physical measurement of
 unit thicknesses or positions. Instead, units are defined by their age ranges.
 For chronostratigraphic columns, age information must be provided to define an
@@ -126,20 +129,20 @@ age model, in the form of relative positions within chronostratigraphic
 intervals (e.g., "Lower Silurian", "Upper Devonian"). _Absolute_ ages are not
 currently supported.
 
-### Measured sections
+### Measured columns
 
-**Measured sections** are detailed stratigraphic or borehole logs defined in terms of physical positions
-(height or depth). These columns (`col_type: "section"`) are typically much
+**Measured columns** are detailed measured sections or borehole logs defined in terms of physical positions
+(height or depth). These columns (`col_type: measured`) are typically much
 more detailed than chronostratigraphic charts (i.e., an individual unit may
 represent a single cm- to meter-scale bed, rather than an entire Formation or
-Member). Measured sections are typically simpler than chronostratigraphic
+Member). Measured columns are typically simpler than chronostratigraphic
 columns, without overlapping units or complex hierarchical structures.
 Efficient entry of these columns is supported by several affordances for rapid
 data entry, including:
 
 - A **Facies** table, which summarizes of environmental and lithologic information that can be applied across many units
-- Top positions are inferred from the unit above, so each unit needs only a `b_pos` (plus a `t_pos` on the topmost unit, or an empty closing row above it) if there are no gaps or overlaps within a section.
-- Shorthand fields relating to typical lithostratigraphic measurement practices, such as `grainsize` and `covered`.
+- Top positions are inferred from the unit above, so each unit needs only one position (plus an empty closing row at the top) where units don't overlap.
+- Shorthand fields and rows relating to typical lithostratigraphic measurement practices, such as `grainsize`, `covered`, and rows named `covered` or `gap`.
 
 Most importantly, unit descriptions such as `lithology`, `strat_name`, and `facies` can "fill up" into blank
 cells above them (with `fill_values: y` in the **Metadata** sheet; downward, for cores logged by depth), allowing

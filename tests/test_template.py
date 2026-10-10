@@ -1,16 +1,16 @@
-"""The published template must be exactly what its YAML description builds."""
+"""Each published template must be exactly what its YAML description builds."""
 
 from pathlib import Path
 
+import pytest
 from openpyxl import load_workbook
 
-from column_template import build_template, published_path
+from column_template import build_template, published_path, template_names
 
 SPEC = Path(__file__).parent.parent / "Excel Templates" / "column-ingestion-template.yaml"
-COMMITTED = published_path(SPEC)
 OUT_OF_DATE = (
-    "The published template no longer matches the YAML. Run `make template`, review the "
-    "-new copy, then `make promote` to replace the published template with it."
+    "A published template no longer matches the YAML. Run `make template`, review the "
+    "-new copies, then `make promote` to replace the published templates with them."
 )
 
 
@@ -65,7 +65,8 @@ def describe(path) -> dict:
         for row in ws.iter_rows():
             for cell in row:
                 note = cell.comment and (cell.comment.text, cell.comment.author)
-                cells[cell.coordinate] = (cell.value, _style(cell), note)
+                link = cell.hyperlink and cell.hyperlink.target
+                cells[cell.coordinate] = (cell.value, _style(cell), note, link)
         sheets[ws.title] = {
             "cells": cells,
             "widths": {k: d.width for k, d in ws.column_dimensions.items()},
@@ -79,9 +80,10 @@ def describe(path) -> dict:
     return {"order": wb.sheetnames, "sheets": sheets}
 
 
-def test_template_matches_yaml(tmp_path):
-    built = build_template(SPEC, tmp_path / "built.xlsx")
-    expected, actual = describe(COMMITTED), describe(built)
+@pytest.mark.parametrize("template", template_names(SPEC))
+def test_template_matches_yaml(tmp_path, template):
+    built = build_template(SPEC, tmp_path / "built.xlsx", template)
+    expected, actual = describe(published_path(SPEC, template)), describe(built)
     assert actual["order"] == expected["order"], OUT_OF_DATE
     for name in expected["order"]:
         assert actual["sheets"][name] == expected["sheets"][name], (
