@@ -3,7 +3,7 @@ title: Column ingestion FAQ
 ---
 
 Common questions about preparing a column spreadsheet for Macrostrat. For the
-step-by-step guide, start with the [quickstart guide](./Column%20ingestion%20quickstart.md); every sheet and field
+step-by-step guide, start with the [quickstart guide](./Quickstart.md); every sheet and field
 is described in the [full specification](./Full%20specification.md).
 
 ## Getting started
@@ -12,10 +12,11 @@ is described in the [full specification](./Full%20specification.md).
 
 There are two. The
 [simple template](https://github.com/Macrostrat/column-ingestion/raw/main/Excel%20Templates/column-ingestion-template-simple.xlsx)
-is a measured column with one `position` per unit and only the essential fields; the
-[full template](https://github.com/Macrostrat/column-ingestion/raw/main/Excel%20Templates/column-ingestion-template.xlsx)
+is a measured column with one `position` per unit and only the essential fields, and is
+the one the quickstart walks through; the
+[expanded template](https://github.com/Macrostrat/column-ingestion/raw/main/Excel%20Templates/column-ingestion-template-expanded.xlsx)
 has every field. Both are read the same way on upload. Their tabs follow the steps of
-the [quickstart guide](./Column%20ingestion%20quickstart.md), their headers are
+the [quickstart guide](./Quickstart.md), their headers are
 coloured by whether a field is required, and each data tab is followed by an
 "(example)" tab showing what every field means, its format, and filled-in rows. A
 [worked example](https://github.com/Macrostrat/column-ingestion/raw/main/Examples/hogan-2011-marble-mountains.xlsx)
@@ -45,10 +46,10 @@ with the `col_id` of the column it belongs to.
 > [!question] Do I need to enter both `b_pos` and `t_pos` for every unit?
 
 No. Every unit needs one position, the height of its base: `position` in the simple
-template, `b_pos` in the full one. Every unit's top is taken from the base of the unit
+template, `b_pos` in the expanded one. Every unit's top is taken from the base of the unit
 above it. The topmost unit has nothing above it, so end the column with an empty closing
 row: a row with only `col_id` and a position giving the height of the top of the column.
-It is not a unit, but a `b_int` and `b_prop` on it date the top. In the full template, a
+It is not a unit, but a `b_int` and `b_prop` on it date the top. In the expanded template, a
 `t_pos` on the topmost unit works instead, and is also how overlapping units are given. Row order doesn't matter, because units are sorted by height.
 
 > [!question] How small or large should a unit be?
@@ -61,7 +62,8 @@ simpler option and note any generalizations in `comments`.
 
 A covered interval (rock that is there but not exposed) is a unit like any other. Name
 it `covered`, as its `unit_name` or in place of its `lithology`; or, if you can infer the
-lithology, such as `shale` for a recessive interval, write that and set `covered` to `y`.
+lithology, such as `shale` for a recessive interval, write that and set `covered` to `y`
+(expanded template).
 A gap (missing rock) is not a unit: add a row named `gap` (as its `unit_name`) at the
 base of the missing interval, and no unit is created between it and the next row. Say
 what the gap is in `comments`. A gap does not need a new `section_id` unless the age
@@ -79,9 +81,20 @@ both cells red when a row has neither.
 > [!question] How do I write the lithology?
 
 Descriptive words first, then the rock name: `cross-stratified sandstone`. Separate
-several lithologies with `;`, and put lesser ones in `minor_lith`. For a range, list
+several lithologies with `;`, and put lesser ones in `minor_lith` (expanded template). For a range, list
 both end members: "light grey to black shale" becomes `light grey, black shale`.
 Attributes need a rock name to attach to; "flute casts" on its own is not a lithology.
+
+> [!question] How closely do I have to follow Macrostrat's lithology and environment terms?
+
+Feel free to diverge a bit. Describe your rocks the way you would in a paper, using
+Macrostrat's [lithology](https://dev.macrostrat.org/lex/lithologies) names where they fit.
+Words the ingester can't match are left out of the parsed lithology, with a warning, rather
+than stopping the upload. They are also how Macrostrat's lexicon gets better over time: they
+show us which terms people actually use and are missing. To see how your wording will be
+read before you submit, paste it into the
+[lithology matcher](https://dev.macrostrat.org/lex/match/lithologies).
+Interval names are the exception: they must match a Macrostrat interval exactly.
 
 > [!question] I described my facies on the `facies` sheet. Do I still need to fill in `lithology`?
 
