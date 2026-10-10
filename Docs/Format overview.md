@@ -7,7 +7,7 @@ measured sections (height), or boreholes (depth), using the following sheets of 
   carrying information about individual stratigraphic units and their positions within a column (in age or depth/height space).
 - The [`columns` sheet](./Full%20specification.md#the-columns-sheet) carries metadata about columns
 - The [`metadata` sheet](./Full%20specification.md#the-metadata-sheet) carries information about the project, compiler, and import defaults
-- Other ancillary sheets (e.g., `facies`, `refs`) provide additional metadata that helps fill the data table
+- Other sheets (e.g., `facies`, `refs`) provide additional metadata that helps fill the data table
 - [*Column-linked data sheets*](./Full%20specification.md#column-linked-data-sheets)
   can be included to provide additional information about units, facies, or other aspects of the column.
 
