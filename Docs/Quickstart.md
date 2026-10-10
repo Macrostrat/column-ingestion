@@ -23,6 +23,8 @@ This guide walks through the simplest case: a measured section logged by height,
 - **Units**: The core sheet: position, unit, surface information, and age model information
 - **Refs**: where the columns came from
 
+...and `facies`, `images`, and other height-keyed samples you might add.
+
 ## Filling the workbook
 
 One `.xlsx` workbook per project. The template's tabs are in the same order as the steps below, and each header has a note you can see by hovering over it. Each data tab is followed by an **"(example)" tab** showing what every field means, its format, and filled-in rows. Type your data on the plain tabs; the example tabs are ignored on upload. Header colours: 🟥 required · 🟧 required, one of a pair (`strat_name` / `unit_name`) · 🟨 recommended · 🟦 age tie point · ⬜ optional.
