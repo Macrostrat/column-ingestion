@@ -32,7 +32,7 @@ One row per column. A column is one outcrop or core site.
 |---|---|
 | **`col_id`** | Short ID, e.g. `MM1`. The units sheet uses it. |
 | `col_name`, `col_group` | `col_group` groups related columns together. |
-| **Location** | Either **`lat` + `lng`** (decimal degrees, west is negative) **or** `geom` as a `POLYGON(...)`. `geom` does **not** accept a `POINT`. |
+| **Location** | Either **`lat` + `lng`** (decimal degrees, west is negative) **or** `geom`: a `POLYGON(...)` for an area, or a `LINESTRING(...)` for a measured traverse. `geom` does **not** accept a `POINT`. |
 | `ref_ids` | One or more `ref_id`s from the `refs` sheet. |
 
 ## 3. `units`: the rocks, one row per unit
@@ -107,7 +107,7 @@ The template's README tab has the same checklist, with a box to tick for each it
 
 **`columns`**
 
-- [ ] Every column has a location (`lat`/`lng` or a polygon).
+- [ ] Every column has a location (`lat`/`lng`, a polygon or a traverse line).
 - [ ] Every column lists its sources in `ref_ids`.
 
 **`units`**

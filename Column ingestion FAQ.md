@@ -142,9 +142,9 @@ how precise they are in the column's `comments`.
 
 > [!question] Why was my `geom` rejected?
 
-`geom` is only for columns that cover an area, and must be a `POLYGON` or
-`MULTIPOLYGON` in well-known text. For a single location, use `lat` and `lng`
-instead; a `POINT` in `geom` is rejected.
+`geom` is for columns that cover an area (a `POLYGON` or `MULTIPOLYGON`) or follow
+a measured traverse (a `LINESTRING` or `MULTILINESTRING`), in well-known text. For a
+single location, use `lat` and `lng` instead; a `POINT` in `geom` is rejected.
 
 > [!question] I digitized a column from a figure. What should I include?
 

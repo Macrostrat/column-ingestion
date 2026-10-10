@@ -101,7 +101,7 @@ readme:
             - col_type and axis_type match the data (measured and height for a measured section).
         - tab: columns
           items:
-            - Every column has lat + lng (or a POLYGON in geom; a POINT is rejected).
+            - Every column has lat + lng, or a POLYGON or LINESTRING in geom (a POINT is rejected).
             - Every column lists its sources in ref_ids.
         - tab: units
           items:
@@ -244,8 +244,8 @@ sheets:
       - name: geom
         kind: optional
         width: 28
-        meaning: Only if the column covers an area. A POINT here is rejected; use lat/lng.
-        format: POLYGON((lng lat, ...))
+        meaning: Only if the column covers an area (a POLYGON) or follows a measured traverse (a LINESTRING). A POINT here is rejected; use lat/lng.
+        format: POLYGON((lng lat, ...)) or LINESTRING(lng lat, ...)
       - name: ref_ids
         kind: recommended
         width: 16

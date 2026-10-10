@@ -376,10 +376,15 @@ columns listed here.
 Either a `lng`,`lat` pair or a `geom` is required.
 
 - `lng`,`lat`: decimal degrees (WGS84); longitudes west of Greenwich are negative. Use this for a point location.
-- `geom`: a _Well-known text_ (e.g. drawn with [wktmap.com](https://wktmap.com/)) `POLYGON` or `MULTIPOLYGON`, for a column that covers an
-  area. Points and lines are rejected here; give a point location as `lng`,`lat` instead.
-- If both are given, the polygon wins: the column's position is taken from inside the polygon, with a warning if the
-  `lng`,`lat` point falls outside it.
+- `geom`: a _Well-known text_ (e.g. drawn with [wktmap.com](https://wktmap.com/)) geometry:
+  - `POLYGON` or `MULTIPOLYGON`, for a column that covers an area;
+  - `LINESTRING` or `MULTILINESTRING`, for a measured traverse. The column is placed at a point on the line,
+    and has no area.
+
+  Points are rejected here; give a point location as `lng`,`lat` instead.
+- If both are given, the geometry wins: the column's position is taken from inside the polygon, with a warning
+  if the `lng`,`lat` point falls outside it. A point within 1 km of a traverse line is kept as the column's
+  position.
 
 ### Column metadata fields
 
