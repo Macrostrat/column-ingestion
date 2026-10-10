@@ -13,6 +13,8 @@ for ingestion into Macrostrat using tabular formats (e.g., Excel spreadsheets).
 > This is a draft document describing ongoing work. The format described here
 > is subject to change as the specification is implemented.
 
+## [Simple template](https://github.com/Macrostrat/column-ingestion/raw/main/Excel%20Templates/column-ingestion-template-simple.xlsx)
+
 ## Documentation
 
 - [**Quickstart guide**](./Docs/Quickstart.md): building a column spreadsheet, step by step
