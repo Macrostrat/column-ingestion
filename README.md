@@ -65,8 +65,8 @@ make test         # check the published Excel files and the quickstart guide all
 
 `make template` never touches the published templates in `Excel Templates/`: it writes a `-new` copy beside each
 (e.g. `column-ingestion-template-new.xlsx`), so the original and the new version can be compared. The `-new` copies
-are local review files and are ignored by git. Once they look right, `make promote` copies them over the published
-templates; commit those together with the YAML.
+are local review files and are ignored by git. Once they look right, `make promote` moves them over the published
+templates, so no `-new` copies are left behind; commit those together with the YAML.
 
 `make test` builds a fresh copy from the YAML and compares it with the published `.xlsx`. It fails after the YAML is
 edited until the new version is promoted, as a reminder that the template people download is out of date (it also
@@ -159,7 +159,7 @@ Ingestion of this format is now available, as part of the **Macrostrat v2** effo
   opens the parsed columns in the column editor. Saving columns to the database is limited to administrators.
 - **Command line**, for maintainers: `macrostrat columns ingest <file> [--dry-run]`.
 
-Not every field in this spec is used yet. In particular, the **Facies** and **Images** sheets, column-linked data
+Not every field in this spec is used yet. In particular, the **Images** sheet, column-linked data
 sheets, column- and project-level age defaults, and the alternate formats (GIS layers, BibTeX) are accepted in a
 workbook but not yet read by the ingester; see the [full specification](./Full%20specification.md) for details.
 

@@ -53,12 +53,12 @@ A unit is any chunk you can describe, from a single bed up to a whole formation.
 
 | Field | Notes |
 |---|---|
-| `lithology` | e.g. `cross-stratified sandstone`. Attributes go before the rock name. Separate several lithologies with `;`. For a range ("grey to black shale"), list both end members. Names are listed at [dev.macrostrat.org/lex/lithologies](https://dev.macrostrat.org/lex/lithologies). |
-| `minor_lith` | Subordinate lithologies, written the same way. |
-| `covered` | `y` for a covered interval: present but not exposed. Inferred lithology (e.g. `shale` for a recessive interval) or blank/none is fine. |
 | **`strat_name`** or **`unit_name`** | **At least one per unit.** `strat_name` is meant to be a formal name, of any rank. `unit_name` is a locally defined name (e.g. "upper carbonate"). If `unit_name` is blank, `strat_name` becomes the unit's name. |
-| `facies` | Optional: a `facies_id` from the `facies` tab (below). **Note: the ingester does not read the `facies` tab yet, so put the lithology on each unit as well.** |
-| `basal_surface` | e.g. `nonconformity`, `conformable`, `sharp`, `gradational`, `erosive`. Optional and experimental. |
+| `lithology` | e.g. `cross-stratified sandstone`. Attributes go before the rock name. Separate several lithologies with `;`. For a range ("grey to black shale"), list both end members. Names are listed at [dev.macrostrat.org/lex/lithologies](https://dev.macrostrat.org/lex/lithologies). |
+| `minor_lith` | *Full template.* Subordinate lithologies, written the same way. |
+| `covered` | *Full template.* `y` for a covered interval: present but not exposed. Inferred lithology (e.g. `shale` for a recessive interval) or blank/none is fine. |
+| `facies` | Optional: a `facies_id` from the `facies` tab (below). A unit takes its facies' lithology and environment wherever it leaves its own blank. |
+| `basal_surface` | *Full template.* e.g. `nonconformity`, `conformable`, `sharp`, `gradational`, `erosive`. Optional and experimental. |
 | `comments` | Generalizations you made, gaps. |
 
 > **Tip:** the ingester parses `lithology` / `minor_lith` text into Macrostrat lithologies, attributes and proportions. Paste your wording into the **[lithology matcher](https://dev.macrostrat.org/lex/lith-match)** to see exactly what it recognises — and which words it can't match — before you submit.
@@ -78,11 +78,11 @@ You only fill these in at **tie points**. The ingester interpolates between them
 - **Correlations:** give correlated horizons (e.g. a datum bed) the **same `b_int` and `b_prop` in every column**. If a correlation falls inside a unit, split the unit at that height.
 - **Notes:** write every age assumption in `age_model_notes`.
 - **Gaps:** where rock is missing (e.g., missing core), add a row named `gap` (as its `unit_name`) at the base of the missing interval. No unit is created between it and the next row.
-- **Covered intervals:** add a unit named `covered` (as its `unit_name` or `lithology`), or set `covered` = `y` on a unit whose lithology you can infer.
+- **Covered intervals:** add a unit named `covered` (as its `unit_name` or `lithology`). In the full template you can instead set `covered` = `y` on a unit whose lithology you can infer.
 
 **Optional: the `facies` tab**
 
-Totally optional. A facies is a named list of lithologies and environments, with a description: for example `F1` = `desiccation cracks, laminated, fine sandstone (10%); lime mudstone`, `peritidal`. A unit can give a facies by its `facies_id` in its `facies` field. The tab is not read on upload yet, so still fill in each unit's `lithology`.
+Totally optional. A facies is a named list of lithologies and environments, with a description: for example `F1` = `desiccation cracks, laminated, fine sandstone (10%); lime mudstone`, `peritidal`. A unit can give a facies by its `facies_id` in its `facies` field. Wherever the unit leaves its own `lithology` or `environment` blank, it takes the facies'; its own cells always win.
 
 ## 4. `refs`: where the data came from
 

@@ -113,8 +113,11 @@ readme:
             - Every column has at least 2 age tie points (b_int + b_prop).
             - Every unit has a strat_name or a unit_name (otherwise it is saved as "default").
             - Every interval name is spelled as in Macrostrat (look it up with the link below).
-            - Lithology is on every unit (the facies tab is NOT read by the ingester yet).
-            - Covered intervals are units named covered (or covered = y), and missing rock is a row named gap.
+            - Every unit has a lithology, of its own or from its facies.
+            - item: Covered intervals are units named covered (or covered = y), and missing rock is a row named gap.
+              only: [full]
+            - item: Covered intervals are units named covered, and missing rock is a row named gap.
+              only: [simple]
         - tab: refs
           items:
             - Every ref_id cited on columns is here, with authors, title and a year.
@@ -137,8 +140,11 @@ readme:
     - paragraph: A blank b_prop counts as 0 (the oldest end of the interval), so make an educated guess instead.
     - paragraph: Correlated horizons in different columns get the same b_int and b_prop.
     - paragraph: "Covered intervals: add a unit named covered (as its unit_name or lithology), or set covered = y on a unit and give your best inference of its lithology."
+      only: [full]
+    - paragraph: "Covered intervals: add a unit named covered (as its unit_name or lithology)."
+      only: [simple]
     - paragraph: "Gaps (missing rock): add a row named gap at the base of the missing interval. No unit is created between it and the next row, and explain the gap in comments."
-    - paragraph: Extra tabs (this one, the example tabs, facies and images) are ignored on upload.
+    - paragraph: Extra tabs (this one, the example tabs and images) are ignored on upload.
 
 sheets:
   # ---------------------------------------------------------------- Step 1
@@ -312,6 +318,16 @@ sheets:
         meaning: HEIGHT OF THE TOP of this unit. Fill it ONLY on the topmost unit of each column, or where units overlap; every other top is taken from the b_pos of the unit above. Or leave it blank and end the column with an empty closing row holding only col_id and b_pos.
         format: Number (metres), top unit only
         validation: {type: decimal, operator: greaterThan, value: -100000, prompt: Top of the unit - topmost unit only}
+      - name: strat_name
+        kind: either
+        width: 24
+        meaning: "Formation or member name, as named in Macrostrat. Fill strat_name, unit_name, or both: each unit needs at least one. If unit_name is blank, this becomes the unit's name."
+        format: Text
+      - name: unit_name
+        kind: either
+        width: 14
+        meaning: 'A local name for the unit (e.g. "upper carbonate"). Fill unit_name, strat_name, or both: each unit needs at least one. If both are filled, this is the unit''s name. Write "covered" for a covered interval, or "gap" at the base of missing rock.'
+        format: Text
       - name: lithology
         kind: required
         width: 30
@@ -326,20 +342,11 @@ sheets:
         format: Text, same format as lithology
         link: https://dev.macrostrat.org/lex/lithologies
       - name: covered
+        only: [full]
         kind: optional
         width: 9
         meaning: '"y" if the unit is covered: present but not exposed. Its lithology is then your best inference (e.g. shale for a recessive interval).'
         format: y, or blank
-      - name: strat_name
-        kind: either
-        width: 24
-        meaning: "Formation or member name, as named in Macrostrat. Fill strat_name, unit_name, or both: each unit needs at least one. If unit_name is blank, this becomes the unit's name."
-        format: Text
-      - name: unit_name
-        kind: either
-        width: 14
-        meaning: 'A local name for the unit (e.g. "upper carbonate"). Fill unit_name, strat_name, or both: each unit needs at least one. If both are filled, this is the unit''s name. Write "covered" for a covered interval, or "gap" at the base of missing rock.'
-        format: Text
       - name: basal_surface
         only: [full]
         kind: optional
@@ -380,7 +387,7 @@ sheets:
       - name: facies
         kind: optional
         width: 8
-        meaning: "Optional: the facies_id of a facies on the facies tab. The facies tab is not read on upload yet, so still fill lithology."
+        meaning: "Optional: the facies_id of a facies on the facies tab. Wherever this unit leaves its own lithology or environment blank, it takes the facies'; its own cells always win."
         format: A facies_id, e.g. F1
       - name: comments
         kind: recommended
@@ -492,7 +499,7 @@ sheets:
         kind: optional
         width: 24
         meaning: Depositional environment(s) of the facies.
-        format: Text; several separated by ; (names at dev.macrostrat.org/lex/environments)
+        format: Text; several separated by ; or , (names at dev.macrostrat.org/lex/environments)
         link: https://dev.macrostrat.org/lex/environments
       - name: description
         kind: optional

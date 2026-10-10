@@ -85,9 +85,10 @@ Attributes need a rock name to attach to; "flute casts" on its own is not a lith
 
 > [!question] I described my facies on the `facies` sheet. Do I still need to fill in `lithology`?
 
-Yes. The `facies` sheet is useful for your own bookkeeping, but it is not read on
-upload yet, so a unit's lithology comes only from its own `lithology` and `minor_lith`
-cells.
+No. A unit that names a facies in its `facies` field takes the facies' lithologies when
+it has no `lithology` of its own, and the facies' environments when it has no
+`environment`. A unit's own cells always win, so fill them in only where a bed differs
+from its facies.
 
 > [!question] Do I have to repeat the same value down a long column?
 

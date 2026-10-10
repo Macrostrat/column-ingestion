@@ -22,7 +22,7 @@ def main(argv=None):
     parser.add_argument(
         "--promote",
         action="store_true",
-        help="Replace each published template with its -new copy instead of building",
+        help="Move each -new copy over its published template instead of building",
     )
     args = parser.parse_args(argv)
     if args.promote:

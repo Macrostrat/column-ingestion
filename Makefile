@@ -2,7 +2,7 @@
 #
 #   make template    build a -new copy of every template in Excel Templates/ from the YAML
 #                    (the published templates are left untouched), then check the quickstart guide
-#   make promote     replace each published template with its -new copy, then run the tests
+#   make promote     move each -new copy over its published template, then run the tests
 #   make quickstart  only check the quickstart guide against the YAML
 #   make test        check that the promoted templates match the current YAML,
 #                    and that the quickstart guide matches it

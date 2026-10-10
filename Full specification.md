@@ -335,7 +335,12 @@ The lithology fields collectively describe the type of rock present in a unit.
 
 - Multiple facies can be expressed as `<facies_name> (<proportion>)`, where `<proportion>` is a number
   between 0 and 1, a percentage, or a qualitative proportion (`major` or `minor`). Multiple facies are separated by semicolons `;` or commas `,`.
-- If no proportion is provided, all facies are assumed to be present in equal proportions.
+- A unit's own `lithology` and `environment` win. Its facies fill only the fields it leaves blank: the facies'
+  lithologies where the unit has none of its own (`lithology` or `minor_lith`), and the facies' environments where
+  it has no `environment`.
+- A numeric proportion scales the proportions of that facies' lithologies (`F1 (50%)` makes a 50% sandstone in `F1`
+  25% of the unit). Without one, the facies' lithologies are used as written.
+- A `facies_id` that is not on the facies sheet raises a warning.
 
 ### Thickness
 
@@ -483,8 +488,9 @@ Facies are named categories that are analogous to map units, in that they descri
 field-based stratigraphy that are used to drive interpretations.
 
 > [!NOTE]
-> Facies are new and experimental in Macrostrat's ingestion system, and do not currently map to a specific
-> data model within Macrostrat.
+> Facies are new and experimental in Macrostrat's ingestion system. On ingestion they supply the lithologies and
+> environments of the units that name them (see [Facies](#facies)); the facies themselves do not yet map to a
+> data model within Macrostrat, and are not stored.
 
 The sheet is entirely optional. In its simplest form, used by the templates, it is a string-keyed list of
 lithologies and environments with a description:
@@ -501,6 +507,7 @@ lithologies and environments with a description:
 - `lithology`: Lithologies associated with the facies, formatted like the `lithology` field in the **Units** sheet
 - `interpretation`: Interpretation of depositional environment or processes associated with the facies
 - `environment`: Depositional environment associated with the facies; formatted like the `environment` field in the **Units** sheet
+  (several separated by `;` or `,`)
 
 ## The `images` sheet
 

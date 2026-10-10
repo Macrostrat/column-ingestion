@@ -109,14 +109,14 @@ def build_templates(spec_path) -> list[Path]:
 
 
 def promote_templates(spec_path) -> list[Path]:
-    """Replace each published template with its `-new` copy."""
+    """Replace each published template with its `-new` copy, which is moved, not copied."""
     promoted = []
     for name in template_names(spec_path):
         draft = draft_path(spec_path, name)
         if not draft.exists():
             raise FileNotFoundError(f"No new build of {name!r}: build the templates first")
         published = published_path(spec_path, name)
-        shutil.copyfile(draft, published)
+        shutil.move(draft, published)
         promoted.append(published)
     return promoted
 
